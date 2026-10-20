@@ -1,0 +1,2724 @@
+/* =========================================================
+   WebMint — main stylesheet
+   ========================================================= */
+
+:root {
+  /* ფერები — ბრენდი (ორივე თემაში ერთნაირი) */
+  --mint: #4fd1a5;
+  --mint-deep: #2e9e7a;
+  --plum-deep: #1b0322;
+
+  --plum: #4a0d2e;
+  --plum-bright: #e0428a;
+  --plum-soft: #ffa8cf;
+  /* --plum: #3D0F47;      
+    --plum-bright: #8E3BA0; 
+    --plum-soft: #CC8ADB; */
+  --charcoal: #161618;
+  --charcoal-2: #212124;
+  --charcoal-3: #2c2c30;
+  --ink: #161618;
+  --on-dark: #f2f4f3;
+  --on-dark-muted: #a3a8a6;
+
+  /* ფერები — თემაზე დამოკიდებული (ღია) */
+  --paper: #e9ecea;
+  --paper-2: #d9dedb;
+  --paper-3: #f5f7f6;
+  --text: #161618;
+  --ink-muted: #565b58;
+  --fill: var(--mint); /* აბისებრი სათაურის შევსება */
+  --accent-text: var(--plum); /* იისფერი ტექსტი გვერდის ფონზე */
+  --btn-dark: var(--charcoal);
+  --ghost: rgba(22, 22, 24, 0.07); /* ძლივს შესამჩნევი კონტური */
+  color-scheme: light;
+
+  /* ტიპოგრაფია */
+  --font: "Space Grotesk", "Noto Sans Georgian", system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono", "Noto Sans Georgian", ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  /* ზომები */
+  --gutter: clamp(12px, 2vw, 24px);
+  --max: 1360px;
+  --frame: min(100vw - 2 * var(--gutter), var(--max));
+  --r-xl: clamp(26px, 3vw, 40px);
+  --r-lg: clamp(20px, 2vw, 28px);
+  --nav-h: 56px;
+  --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+/* ---------- ღამის რეჟიმი ---------- */
+:root[data-theme="dark"] {
+  --paper: #0c0c0e;
+  --paper-2: #26222b;
+  --paper-3: #19171c;
+  --text: #edefee;
+  --ink-muted: #a09da5;
+  --fill: var(--plum-bright);
+  --accent-text: var(--plum-soft);
+  --btn-dark: #2a2530;
+  --ghost: rgba(255, 255, 255, 0.06);
+  color-scheme: dark;
+}
+
+/* თემის გადართვა — წრიული გახსნა ღილაკიდან (View Transitions) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: clamp(15px, 14px + 0.25vw, 17px);
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Shared bits ---------- */
+.dot-btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--charcoal);
+  color: var(--mint);
+  transition:
+    transform 0.45s var(--ease),
+    background 0.3s;
+}
+.dot-btn svg {
+  transition: transform 0.45s var(--ease);
+}
+.dot-btn--mint {
+  background: var(--mint);
+  color: var(--ink);
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.25s var(--ease),
+    background 0.3s,
+    color 0.3s;
+}
+.btn svg {
+  transition: transform 0.4s var(--ease);
+}
+.btn:hover svg {
+  transform: translate(2px, -2px);
+}
+.btn--dark {
+  background: var(--btn-dark);
+  color: var(--on-dark);
+}
+.btn--dark:hover {
+  background: var(--plum);
+}
+.btn--mint {
+  background: var(--mint);
+  color: var(--ink);
+}
+.btn--mint:hover {
+  background: var(--on-dark);
+}
+
+.btn:active,
+.nav__cta:active,
+.scroll-btn:active,
+.copy-btn:active {
+  transform: scale(0.96);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--on-dark-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tag__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 4px rgba(79, 209, 165, 0.18);
+}
+
+.label-pill {
+  display: inline-flex;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chips li {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.76rem;
+  color: var(--on-dark);
+}
+
+/* click ripple */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.22;
+  transform: scale(0);
+  pointer-events: none;
+  animation: ripple 0.7s var(--ease) forwards;
+}
+@keyframes ripple {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* ---------- Scroll progress ---------- */
+.progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 60;
+  pointer-events: none;
+}
+.progress__bar {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--mint), var(--plum-bright));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav {
+  position: fixed;
+  z-index: 50;
+  top: calc(var(--gutter) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--frame) - 2 * clamp(10px, 1.6vw, 20px));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(44, 44, 48, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  color: var(--on-dark);
+  transition:
+    top 0.45s var(--ease),
+    background 0.4s,
+    box-shadow 0.4s;
+}
+.nav.is-scrolled {
+  top: 12px;
+  background: rgba(22, 22, 24, 0.88);
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
+}
+
+/* ლოგო (images/logo.svg — ვერტიკალური, 579×702) */
+.nav__logo {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  height: 42px;
+  padding: 0 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.nav__logo:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.nav__logo img {
+  display: block;
+  width: auto;
+  height: 38px;
+  transition: transform 0.5s var(--ease);
+}
+.nav__logo:hover img {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.nav__links {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  margin-inline: auto;
+}
+.nav__links a {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  color: var(--on-dark-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav__links a:hover,
+.nav__links a.is-active {
+  color: var(--on-dark);
+}
+
+.nav__indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.55s var(--ease),
+    width 0.55s var(--ease),
+    opacity 0.3s;
+}
+
+/* ლოგოს ნათება და "პრიალი" — სინათლის ზოლი ლოგოს ფორმაზე გადაირბენს */
+.nav__logo {
+  position: relative;
+}
+.nav__logo img {
+  grid-area: 1 / 1;
+  filter: drop-shadow(0 0 6px rgba(95, 227, 188, 0.35))
+    drop-shadow(0 0 14px rgba(95, 227, 188, 0.15));
+}
+.nav__logo:hover img {
+  filter: drop-shadow(0 0 8px rgba(95, 227, 188, 0.55))
+    drop-shadow(0 0 20px rgba(95, 227, 188, 0.25));
+}
+.nav__logo::after {
+  content: "";
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.95) 50%,
+    transparent 62%
+  );
+  background-size: 300% 100%;
+  background-position: 0% 0;
+  -webkit-mask: var(--logo-src) center / contain no-repeat;
+  mask: var(--logo-src) center / contain no-repeat;
+}
+.nav .nav__logo {
+  --logo-src: url("../images/leaflogo.svg");
+}
+.footer-bar .nav__logo {
+  --logo-src: url("../images/logo.svg");
+}
+/* ჰედერში — პერიოდულად (ავტომატური ანიმაცია მხოლოდ ჰედერშია) */
+.nav .nav__logo::after {
+  animation: logo-shine 7s ease-in-out 1.2s infinite;
+}
+/* ფუტერში — როცა ეკრანზე გამოჩნდება და მაუსის მიტანისას */
+.footer-bar .nav__logo.is-shining::after,
+.footer-bar .nav__logo:hover::after {
+  animation: logo-shine-once 1.3s ease-in-out;
+}
+@keyframes logo-shine {
+  0% { background-position: 100% 0; }
+  22%, 100% { background-position: 0% 0; }
+}
+@keyframes logo-shine-once {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+/* ენის ღილაკი — ისეთივე, როგორც ღამის რეჟიმის */
+.lang-toggle {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  perspective: 200px;
+  transition: background 0.3s, transform 0.25s var(--ease);
+}
+.lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+.lang-toggle:active {
+  transform: scale(0.92);
+}
+.lang-toggle__text {
+  display: block;
+}
+.lang-toggle__text.is-flipping {
+  animation: lang-flip 0.5s var(--ease);
+}
+@keyframes lang-flip {
+  0% { transform: rotateX(0); opacity: 1; }
+  45% { transform: rotateX(90deg); opacity: 0; }
+  55% { transform: rotateX(-90deg); opacity: 0; }
+  100% { transform: rotateX(0); opacity: 1; }
+}
+
+/* ღამის რეჟიმის ღილაკი */
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-dark);
+  transition:
+    background 0.3s,
+    transform 0.25s var(--ease);
+}
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  transition:
+    transform 0.6s var(--ease),
+    opacity 0.4s;
+}
+.theme-toggle__moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+[data-theme="dark"] .theme-toggle {
+  color: var(--plum-soft);
+}
+[data-theme="dark"] .theme-toggle__sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+[data-theme="dark"] .theme-toggle__moon {
+  opacity: 1;
+  transform: none;
+}
+
+.nav__cta {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 4px 4px 18px;
+  border-radius: 999px;
+  background: var(--on-dark);
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.25s var(--ease);
+}
+.nav__cta .dot-btn {
+  width: 34px;
+  height: 34px;
+}
+.nav__cta:hover .dot-btn {
+  transform: rotate(45deg);
+}
+
+.nav__toggle {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav__toggle span {
+  position: absolute;
+  left: 13px;
+  width: 16px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 0.45s var(--ease),
+    top 0.45s var(--ease);
+}
+.nav__toggle span:first-child {
+  top: 17px;
+}
+.nav__toggle span:last-child {
+  top: 24px;
+}
+.nav.is-open .nav__toggle span:first-child {
+  top: 20.5px;
+  transform: rotate(45deg);
+}
+.nav.is-open .nav__toggle span:last-child {
+  top: 20.5px;
+  transform: rotate(-45deg);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  --tab-r: 26px;
+  position: relative;
+  width: var(--frame);
+  --tab-h: 60px; /* "გადახედე" ენის სიმაღლე */
+  /* ზომა = ფანჯრის სიმაღლე − ზედა დაშორება − ქვედა ენა */
+  min-height: calc(100vh - var(--gutter) - var(--tab-h));
+  min-height: calc(100svh - var(--gutter) - var(--tab-h));
+  margin: var(--gutter) auto 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--charcoal);
+  color: var(--on-dark);
+  border-radius: calc(var(--r-xl) + var(--hero-p, 0) * 24px);
+  transform: scale(calc(1 - var(--hero-p, 0) * 0.05));
+  transform-origin: 50% 0;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.blob {
+  position: absolute;
+  width: clamp(280px, 48vw, 720px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(clamp(60px, 9vw, 120px));
+}
+.blob--mint {
+  top: -25%;
+  right: -12%;
+  background: var(--mint);
+  opacity: 0.32;
+  animation: drift-a 16s ease-in-out infinite alternate;
+}
+.blob--plum {
+  bottom: -35%;
+  left: -15%;
+  background: var(--plum-bright);
+  opacity: 0.5;
+  animation: drift-b 20s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  to {
+    transform: translate(-14%, 18%) scale(1.15);
+  }
+}
+@keyframes drift-b {
+  to {
+    transform: translate(20%, -12%) scale(0.9);
+  }
+}
+
+/* ფონის სილუეტები — იცვლება სიტყვასთან ერთად */
+.scenes {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  width: min(60%, 820px);
+  aspect-ratio: 4 / 3;
+  transform: translateY(-46%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent);
+  mask-image: radial-gradient(closest-side, #000 60%, transparent);
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease);
+}
+.scene.is-active {
+  opacity: 1;
+}
+.scene .a {
+  stroke: rgba(79, 209, 165, 0.45);
+}
+.scene .p {
+  stroke: rgba(204, 138, 219, 0.45);
+}
+.scene .w {
+  stroke-width: 3;
+}
+.scene .dash {
+  stroke-dasharray: 6 12;
+}
+
+/* კონტური "იხატება" */
+.scene .d {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s var(--ease) calc(var(--i, 0) * 70ms);
+}
+.scene.is-active .d {
+  stroke-dashoffset: 0;
+}
+
+/* შევსებული დეტალები ბოლოს ჩნდება */
+.scene .f {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.4);
+  transition:
+    opacity 0.6s,
+    transform 0.8s var(--ease);
+  transition-delay: calc(400ms + var(--i, 0) * 70ms);
+}
+.scene .f.a {
+  fill: rgba(79, 209, 165, 0.35);
+  stroke: none;
+}
+.scene .f.p {
+  fill: rgba(204, 138, 219, 0.3);
+  stroke: none;
+}
+.scene .f.w {
+  fill: rgba(255, 255, 255, 0.14);
+  stroke: none;
+}
+.scene .f.dash {
+  fill: none;
+}
+.scene.is-active .f {
+  opacity: 1;
+  transform: none;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    ellipse at 60% 40%,
+    #000,
+    transparent 70%
+  );
+  mask-image: radial-gradient(ellipse at 60% 40%, #000, transparent 70%);
+}
+
+.hero__inner {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "main    side"
+    "marquee stats";
+  gap: clamp(20px, 4vh, 56px) clamp(24px, 5vw, 80px);
+  padding: calc(var(--nav-h) + clamp(36px, 9vh, 110px)) clamp(20px, 4vw, 56px)
+    clamp(36px, 7vh, 88px);
+  opacity: calc(1 - var(--hero-p, 0) * 0.9);
+  transform: translateY(calc(var(--hero-p, 0) * -70px));
+}
+
+.hero__main {
+  grid-area: main;
+}
+.hero__main .tag {
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+.hero__title {
+  font-size: clamp(2.1rem, min(0.9rem + 4.6vw, 9.5vh), 5.4rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.outline {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--on-dark);
+}
+
+/* მბრუნავი სიტყვა (ავტომატური — მხოლოდ ჰედერში) */
+.rotator {
+  display: inline-grid;
+  vertical-align: bottom;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+.rotator__word {
+  grid-area: 1 / 1;
+  color: var(--mint);
+  opacity: 0;
+  transform: translateY(70%);
+  transition:
+    transform 0.7s var(--ease),
+    opacity 0.5s;
+}
+.rotator__word.is-active {
+  opacity: 1;
+  transform: none;
+}
+.rotator__word.is-leaving {
+  opacity: 0;
+  transform: translateY(-70%);
+}
+
+.hero__side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+  padding-top: 6px;
+  text-align: right;
+}
+.hero__lead {
+  max-width: 32ch;
+  color: var(--on-dark-muted);
+  font-size: 0.95rem;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(79, 209, 165, 0.12);
+  color: var(--mint);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.status-pill i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 209, 165, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(79, 209, 165, 0);
+  }
+}
+
+.hero__stats {
+  grid-area: stats;
+  align-self: end;
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(100%, 230px);
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: var(--charcoal-3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.stat-card strong {
+  min-width: 2.4ch;
+  color: var(--mint);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-card span {
+  color: var(--on-dark-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.hero__marquee {
+  grid-area: marquee;
+  align-self: end;
+}
+.marquee {
+  max-width: 620px;
+  overflow: hidden;
+  padding: 12px 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.marquee ul {
+  display: flex;
+  gap: 32px;
+  padding-right: 32px;
+}
+.marquee li {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  color: var(--on-dark-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.marquee li::after {
+  content: "✦";
+  color: var(--mint);
+  font-size: 0.7rem;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ქვედა "ენა" ჩაზნექილი კუთხეებით */
+.hero__tab {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 12px 12px;
+  background: var(--charcoal);
+  border-radius: 0 0 var(--tab-r) var(--tab-r);
+}
+.hero__tab::before,
+.hero__tab::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: var(--tab-r);
+  height: var(--tab-r);
+  pointer-events: none;
+}
+.hero__tab::before {
+  right: calc(100% - 0.5px);
+  background: radial-gradient(
+    circle at 0 100%,
+    transparent calc(var(--tab-r) - 0.5px),
+    var(--charcoal) var(--tab-r)
+  );
+}
+.hero__tab::after {
+  left: calc(100% - 0.5px);
+  background: radial-gradient(
+    circle at 100% 100%,
+    transparent calc(var(--tab-r) - 0.5px),
+    var(--charcoal) var(--tab-r)
+  );
+}
+
+.scroll-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 5px 5px 5px 22px;
+  border-radius: 999px;
+  background: var(--on-dark);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s var(--ease);
+}
+.scroll-btn:hover .dot-btn svg {
+  transform: translateY(3px);
+}
+
+/* =========================================================
+   SECTIONS (shared)
+   ========================================================= */
+.section {
+  width: var(--frame);
+  margin-inline: auto;
+  padding-block: clamp(72px, 10vw, 140px);
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+.section-head__title {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+/* სათაური "აბის" ფორმაში — სქროლისას ივსება მინტით */
+.pill-title {
+  font-size: clamp(1.9rem, 1rem + 3.4vw, 4.1rem);
+  font-weight: 600;
+  line-height: 1.34;
+  letter-spacing: -0.03em;
+}
+.pill-title__fill {
+  padding: 0.02em 0.42em 0.1em;
+  border-radius: 999px;
+  background:
+    linear-gradient(var(--fill), var(--fill)) no-repeat 0 0 /
+      calc(var(--p, 0) * 100%) 100%,
+    var(--paper-2);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+.about {
+  padding-top: clamp(120px, 13vw, 190px);
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: start;
+  gap: clamp(32px, 6vw, 96px);
+  margin-top: clamp(16px, 2vw, 24px);
+}
+.about__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding-top: 12px;
+}
+/* სამი "აბი" — სქროლზე რიგრიგობით შემოდის მარცხნიდან */
+.pill-stack {
+  display: grid;
+  justify-items: start;
+  gap: 0.14em;
+  font-size: clamp(1.7rem, 0.9rem + 3.2vw, 3.9rem);
+  font-weight: 600;
+  line-height: 1.32;
+  letter-spacing: -0.03em;
+}
+.pill-stack__line {
+  --pi: clamp(0, calc((var(--p, 0) - var(--i, 0) * 0.18) / 0.55), 1);
+  opacity: calc(0.12 + var(--pi) * 0.88);
+  transform: translateX(calc((1 - var(--pi)) * -56px));
+}
+.pill {
+  padding: 0.02em 0.45em 0.1em;
+  border-radius: 999px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.pill--mint {
+  background: var(--mint);
+  color: var(--ink);
+}
+.pill--dark {
+  background: #1a1a1a;
+  color: var(--on-dark);
+}
+[data-theme="dark"] .pill--dark {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+/* მხოლოდ კონტური — ისევე, როგორც ჰედერის "შედეგით" */
+.pill--outline {
+  border: 1.5px solid var(--text);
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--text);
+}
+
+.lead {
+  max-width: 46ch;
+  color: var(--ink-muted);
+}
+
+/* ფონზე ძლივს შესამჩნევი კონტურული "STUDIO" */
+.studio-word {
+  display: block;
+  overflow: clip;
+  margin-top: clamp(8px, 3vw, 40px);
+  pointer-events: none;
+  user-select: none;
+}
+.studio-word span {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ghost);
+  font-size: min(clamp(4.5rem, 2rem + 10vw, 11rem), 21vw);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  transform: translate3d(var(--py, 0px), 0, 0);
+}
+
+/* ედიტორი + ტერმინალი, უკან რბილი მინტის ნათება */
+.about__visual {
+  position: relative;
+  isolation: isolate;
+  margin-top: clamp(0px, 4vw, 64px);
+}
+.about__visual::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -26%;
+  left: -34%;
+  right: 0;
+  bottom: -22%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(79, 209, 165, 0.6),
+    rgba(79, 209, 165, 0.18) 55%,
+    transparent
+  );
+  filter: blur(60px);
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 1.4s var(--ease),
+    transform 1.4s var(--ease);
+}
+.about__visual:has(.code-card.is-visible)::before {
+  opacity: var(--glow, 0.9);
+  transform: none;
+}
+[data-theme="dark"] .about__visual {
+  --glow: 0.7;
+}
+
+/* კოდის ბარათი — მარჯვენა კიდემდე გადის */
+.code-card {
+  --bleed: calc((100vw - var(--frame)) / 2);
+  margin-right: calc(var(--bleed) * -1);
+  padding: clamp(18px, 2.5vw, 32px);
+  padding-right: max(clamp(18px, 2.5vw, 32px), var(--bleed));
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+  background: var(--charcoal);
+  color: var(--on-dark);
+  box-shadow: 0 40px 80px -40px rgba(22, 22, 24, 0.5);
+}
+.code-card__bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+.code-card__bar i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--charcoal-3);
+}
+.code-card__bar i:nth-child(1) {
+  background: var(--plum-bright);
+}
+.code-card__bar i:nth-child(2) {
+  background: var(--mint);
+}
+.code-card__bar span {
+  margin-left: auto;
+  color: var(--on-dark-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.code {
+  display: block;
+  overflow-x: auto;
+  counter-reset: ln;
+  font-family: var(--font-mono);
+  font-size: clamp(0.74rem, 0.66rem + 0.35vw, 0.93rem);
+  line-height: 1.9;
+}
+.code .line {
+  display: block;
+  white-space: pre;
+  opacity: 0.2;
+  transform: translateX(-8px);
+  transition:
+    opacity 0.5s,
+    transform 0.5s var(--ease);
+}
+.code .line::before {
+  counter-increment: ln;
+  content: counter(ln, decimal-leading-zero);
+  display: inline-block;
+  width: 2.6em;
+  color: var(--on-dark-muted);
+  opacity: 0.45;
+}
+.code .line.is-lit {
+  opacity: 1;
+  transform: none;
+}
+.code .k {
+  color: var(--plum-soft);
+}
+.code .s {
+  color: var(--mint);
+}
+.code .c {
+  color: var(--on-dark-muted);
+}
+.code .f {
+  color: #ffffff;
+  font-weight: 500;
+}
+.code .p {
+  color: #b9c4bf;
+}
+
+/* ---------- ტერმინალი ---------- */
+.terminal {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 500px);
+  margin: -32px 0 0 clamp(-48px, -3vw, 0px);
+  padding: 12px 18px 18px;
+  border-radius: 18px;
+  background: #050506;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--on-dark);
+  box-shadow: 0 32px 60px -24px rgba(0, 0, 0, 0.65);
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 0.66rem + 0.2vw, 0.82rem);
+  line-height: 1.75;
+}
+.terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.terminal__bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2a2a2e;
+}
+.terminal__bar span {
+  margin-left: auto;
+  color: var(--on-dark-muted);
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+.t-line {
+  min-height: 1.75em;
+  white-space: pre;
+}
+.t-row {
+  display: grid;
+  grid-template-columns: 1.8em 13em auto;
+}
+.t-prompt {
+  color: var(--plum-soft);
+}
+.t-str {
+  color: var(--mint);
+}
+.t-ok,
+.t-arrow {
+  color: var(--mint);
+}
+.t-status {
+  color: var(--on-dark-muted);
+}
+.t-final {
+  color: var(--on-dark);
+  font-weight: 500;
+}
+
+/* ჯერ არდაწყებული ხაზის ✓ / → დამალულია (მხოლოდ JS-ით ბეჭდვისას) */
+.terminal.is-armed .t-line:not(.is-on) .t-static {
+  visibility: hidden;
+}
+
+.t-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 1px;
+  vertical-align: -0.18em;
+  background: var(--mint);
+}
+.terminal.is-done .t-cursor {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   WORK — პროექტების ქარდები (თითოს თავისი ბრენდის ფერი)
+   ========================================================= */
+.projects {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-rows: repeat(2, clamp(280px, 25vw, 380px));
+  gap: 8px;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+.project--lg {
+  grid-row: span 2;
+}
+
+.project {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 2vw, 28px);
+  border-radius: var(--r-lg);
+  background: var(--p-bg);
+  color: var(--p-fg);
+  cursor: pointer;
+}
+
+/* ბრენდის ფერები — იგივე ცვლადები გამოიყენება ფანჯარაშიც */
+.project--marteo,
+.modal[data-project="marteo"] {
+  --p-bg: #0f1a3a;
+  --p-bg-2: #1b2a5c;
+  --p-fg: #eef2ff;
+  --p-muted: #9aa6c7;
+  --p-accent: #5b8cff;
+  --p-on-accent: #0f1a3a;
+}
+.project--sunleon,
+.modal[data-project="sunleon"] {
+  --p-bg: #f4ecdd;
+  --p-bg-2: #eadbc0;
+  --p-fg: #3a2a17;
+  --p-muted: #8a7556;
+  --p-accent: #b8924a;
+  --p-on-accent: #fffdf8;
+}
+.project--botanica,
+.modal[data-project="botanica"] {
+  --p-bg: #f3f0e6;
+  --p-bg-2: #dfe6d3;
+  --p-fg: #23331f;
+  --p-muted: #6b7a63;
+  --p-accent: #5e7d4f;
+  --p-on-accent: #f8f7f1;
+}
+
+/* ფონის დეტალები */
+.project--marteo {
+  background:
+    radial-gradient(120% 80% at 85% 0%, var(--p-bg-2), transparent 60%),
+    var(--p-bg);
+}
+.project--sunleon::before {
+  /* ოქროსფერი ორმაგი ჩარჩო, როგორც საიტზე */
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 8px;
+  border: 1px solid rgba(184, 146, 74, 0.55);
+  border-radius: calc(var(--r-lg) - 6px);
+  box-shadow:
+    inset 0 0 0 4px var(--p-bg),
+    inset 0 0 0 5px rgba(184, 146, 74, 0.35);
+}
+.project--botanica {
+  background:
+    radial-gradient(90% 70% at 100% 100%, var(--p-bg-2), transparent 70%),
+    var(--p-bg);
+}
+
+/* მთლიან ქარდზე გადაფარებული ღილაკი */
+.project__open {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  border-radius: inherit;
+}
+.project:has(.project__open:focus-visible) {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+.project__open:focus-visible {
+  outline: none;
+}
+
+.project__head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.project__name {
+  font-size: clamp(1.25rem, 1rem + 0.8vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.project--lg .project__name {
+  font-size: clamp(1.6rem, 1rem + 1.6vw, 2.6rem);
+}
+.project--sunleon .project__name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.project--botanica .project__name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+.project__meta {
+  margin-top: 4px;
+  color: var(--p-muted);
+  font-size: 0.84rem;
+}
+
+.project__arrow {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--p-accent);
+  color: var(--p-on-accent);
+  transition: transform 0.5s var(--ease);
+}
+
+/* სქრინშოტი ბრაუზერის ჩარჩოში — ქვემოდან ამოდის */
+.project__shot {
+  position: absolute;
+  z-index: 1;
+  top: 40%;
+  left: 9%;
+  right: 9%;
+  bottom: -12%;
+  transition: transform 0.7s var(--ease);
+}
+.project--lg .project__shot {
+  top: 24%;
+  left: 7%;
+  right: 7%;
+  bottom: -8%;
+  transform: perspective(1400px) rotateX(9deg);
+  transform-origin: 50% 100%;
+}
+.browser {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: #fff;
+  box-shadow:
+    0 -10px 50px -12px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.browser__bar {
+  flex: none;
+  display: flex;
+  gap: 5px;
+  padding: 8px 10px;
+  background: #ededed;
+}
+.project--marteo .browser__bar {
+  background: #1e2847;
+}
+.browser__bar i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.18);
+}
+.project--marteo .browser__bar i {
+  background: rgba(255, 255, 255, 0.2);
+}
+.browser img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Hover: სქრინი ამოდის და იზრდება, ქვემოთ აღწერა და ტეგები ჩნდება */
+.project__reveal {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  gap: 10px;
+  padding: 48px clamp(18px, 2vw, 28px) clamp(16px, 2vw, 24px);
+  background: linear-gradient(to top, var(--p-bg) 55%, transparent);
+  font-size: 0.9rem;
+  transition:
+    transform 0.55s var(--ease),
+    opacity 0.4s;
+}
+.project__reveal p {
+  max-width: 46ch;
+}
+.project__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.project__tags li {
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--p-fg) 25%, transparent);
+  font-size: 0.76rem;
+}
+
+@media (hover: hover) {
+  .project__reveal {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  .project:hover .project__reveal,
+  .project:has(.project__open:focus-visible) .project__reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .project:hover .project__shot {
+    transform: translateY(-14px) scale(1.03);
+  }
+  .project--lg:hover .project__shot {
+    transform: perspective(1400px) rotateX(0deg) translateY(-14px) scale(1.02);
+  }
+  .project:hover .project__arrow {
+    transform: rotate(45deg);
+  }
+}
+
+/* =========================================================
+   პროექტის ფანჯარა (modal)
+   ========================================================= */
+html.is-locked {
+  overflow: hidden;
+}
+html.is-locked body {
+  padding-right: var(--sbw, 0px);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: clamp(12px, 4vh, 48px) var(--gutter);
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+.modal[open] {
+  display: grid;
+  place-items: center;
+}
+.modal::backdrop {
+  background: rgba(8, 8, 10, 0.62);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: fade-in 0.35s ease;
+}
+
+.modal__panel {
+  position: relative;
+  width: min(100%, 1040px);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: var(--paper-3);
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.6);
+  animation: modal-in 0.55s var(--ease);
+}
+.modal.is-closing .modal__panel {
+  animation: modal-out 0.3s ease forwards;
+}
+.modal.is-closing::backdrop {
+  animation: fade-out 0.3s ease forwards;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+}
+@keyframes modal-out {
+  to {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.modal__close {
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--paper-2);
+  color: var(--text);
+  transition:
+    transform 0.4s var(--ease),
+    background 0.3s;
+}
+.modal__close:hover {
+  transform: rotate(90deg);
+}
+
+.modal__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(20px, 3vw, 40px);
+}
+.modal__content {
+  display: grid;
+  gap: clamp(20px, 2.6vw, 32px);
+  transition:
+    opacity 0.25s,
+    transform 0.35s var(--ease);
+}
+.modal__content.is-swapping {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.pm-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  padding-right: 52px;
+}
+.pm-meta {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+.pm-title {
+  font-size: clamp(1.8rem, 1rem + 2.6vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.pm-visit {
+  flex: none;
+}
+
+/* გალერეა — ბრენდის ფონზე; მობილურის ხედი ვიწროდ */
+.pm-gallery {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: clamp(14px, 2.4vw, 32px);
+  border-radius: var(--r-lg);
+  background: var(--p-bg);
+}
+.pm-shot {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+}
+.pm-shot--mobile {
+  flex: 0 0 22%;
+}
+.pm-shot img {
+  width: 100%;
+  max-height: 58vh;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 10px;
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.45);
+}
+.pm-shot--mobile img {
+  border-radius: 18px;
+}
+
+.pm-block h4 {
+  margin: 0 0 8px;
+  color: var(--accent-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pm-block p {
+  max-width: 62ch;
+  color: var(--ink-muted);
+}
+.pm-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.pm-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px 24px;
+}
+.pm-list li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--ink-muted);
+}
+.pm-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.65em;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mint);
+}
+
+.pm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pm-tags li {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  font-size: 0.8rem;
+}
+
+.modal__foot {
+  flex: none;
+  padding: 10px;
+  border-top: 1px solid var(--paper-2);
+}
+.modal__next {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 20px;
+  border-radius: 999px;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+.modal__next strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.modal__next .dot-btn {
+  margin-left: auto;
+}
+.modal__next:hover {
+  background: var(--paper-2);
+}
+.modal__next:hover .dot-btn {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+.services {
+  --tab-r: 22px;
+  position: relative;
+  width: var(--frame);
+  margin: clamp(56px, 6vw, 80px) auto 0;
+  padding: clamp(44px, 6vw, 88px) clamp(20px, 5vw, 72px);
+  border-radius: var(--r-xl);
+  background: var(--charcoal);
+  color: var(--on-dark);
+}
+
+/* ზედა "ენა" ჩაზნექილი კუთხეებით */
+.services__tab {
+  position: absolute;
+  bottom: calc(100% - 1px);
+  left: clamp(44px, 6vw, 88px);
+  padding: 12px 22px 4px;
+  border-radius: var(--tab-r) var(--tab-r) 0 0;
+  background: var(--charcoal);
+  color: var(--mint);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.services__tab::before,
+.services__tab::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: var(--tab-r);
+  height: var(--tab-r);
+  pointer-events: none;
+}
+.services__tab::before {
+  right: calc(100% - 0.5px);
+  background: radial-gradient(
+    circle at 0 0,
+    transparent calc(var(--tab-r) - 0.5px),
+    var(--charcoal) var(--tab-r)
+  );
+}
+.services__tab::after {
+  left: calc(100% - 0.5px);
+  background: radial-gradient(
+    circle at 100% 0,
+    transparent calc(var(--tab-r) - 0.5px),
+    var(--charcoal) var(--tab-r)
+  );
+}
+
+.services__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(32px, 6vw, 96px);
+}
+.services__title {
+  font-size: clamp(2rem, 1rem + 3.2vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+.services__title span {
+  color: var(--mint);
+}
+.services__head p {
+  max-width: 38ch;
+  margin-top: 20px;
+  color: var(--on-dark-muted);
+}
+
+.acc {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.acc:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.acc__head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.4em 1fr auto;
+  align-items: center;
+  gap: clamp(10px, 2vw, 24px);
+  padding: clamp(18px, 2.2vw, 28px) 0;
+  text-align: left;
+}
+.acc__num {
+  color: var(--on-dark-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+.acc__title {
+  font-size: clamp(1.1rem, 0.85rem + 1vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition:
+    color 0.3s,
+    transform 0.5s var(--ease);
+}
+.acc__head:hover .acc__title {
+  transform: translateX(4px);
+}
+.acc.is-open .acc__title {
+  color: var(--mint);
+  transform: translateX(8px);
+}
+
+.acc__icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition:
+    background 0.4s,
+    border-color 0.4s,
+    color 0.4s,
+    transform 0.5s var(--ease);
+}
+.acc__icon::before,
+.acc__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.acc__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform 0.45s var(--ease);
+}
+.acc.is-open .acc__icon {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--ink);
+  transform: rotate(180deg);
+}
+.acc.is-open .acc__icon::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.acc__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s var(--ease);
+}
+.acc.is-open .acc__panel {
+  grid-template-rows: 1fr;
+}
+.acc__content {
+  min-height: 0;
+  overflow: hidden;
+}
+.acc__body {
+  display: grid;
+  gap: 16px;
+  padding: 0 0 clamp(20px, 2.4vw, 30px) calc(2.4em + clamp(10px, 2vw, 24px));
+}
+.acc__body p {
+  max-width: 52ch;
+  color: var(--on-dark-muted);
+}
+
+/* =========================================================
+   PROCESS — timeline
+   ========================================================= */
+.process__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(32px, 6vw, 96px);
+}
+.process__intro {
+  position: sticky;
+  top: 120px;
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+.process__intro p {
+  max-width: 40ch;
+  color: var(--ink-muted);
+}
+
+.timeline {
+  --tl-pad: clamp(36px, 4vw, 56px);
+  position: relative;
+  padding-left: var(--tl-pad);
+}
+.timeline__line {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 11px;
+  width: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--paper-2);
+}
+.timeline__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--mint);
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+}
+
+.steps {
+  display: grid;
+  gap: 16px;
+}
+.step {
+  position: relative;
+  padding: clamp(20px, 2.5vw, 32px);
+  border-radius: var(--r-lg);
+  background: var(--paper-3);
+  border: 1px solid transparent;
+  opacity: 0.5;
+  transform: scale(0.97);
+  transform-origin: left center;
+  transition:
+    opacity 0.5s,
+    transform 0.6s var(--ease),
+    border-color 0.5s,
+    box-shadow 0.5s;
+}
+.step.is-active {
+  opacity: 1;
+  transform: none;
+  border-color: rgba(79, 209, 165, 0.55);
+  box-shadow: 0 24px 48px -28px rgba(22, 22, 24, 0.3);
+}
+.step__dot {
+  position: absolute;
+  top: clamp(26px, 3vw, 38px);
+  left: calc(var(--tl-pad) * -1 + 4px);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--paper-2);
+  transition:
+    background 0.4s,
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+.step.is-active .step__dot {
+  background: var(--mint);
+  border-color: var(--mint);
+  box-shadow: 0 0 0 6px rgba(79, 209, 165, 0.2);
+}
+.step__num {
+  color: var(--accent-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.step h3 {
+  margin: 6px 0 8px;
+  font-size: clamp(1.2rem, 1rem + 0.8vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.step p {
+  color: var(--ink-muted);
+}
+
+/* =========================================================
+   CONTACT / FOOTER
+   ========================================================= */
+.contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: var(--frame);
+  margin: clamp(24px, 4vw, 48px) auto var(--gutter);
+  padding: clamp(48px, 7vw, 104px) clamp(20px, 5vw, 72px) var(--gutter);
+  border-radius: var(--r-xl);
+  background: var(--plum);
+  color: var(--on-dark);
+}
+.contact__glow {
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  right: -10%;
+  width: clamp(260px, 45vw, 640px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--mint);
+  opacity: 0.18;
+  filter: blur(100px);
+}
+.contact .tag {
+  color: var(--on-dark);
+}
+
+.contact__title {
+  margin: 24px 0 16px;
+  font-size: clamp(2.3rem, 1rem + 4.2vw, 5.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+.contact__title span {
+  color: var(--mint);
+}
+
+/* ფონის canvas — წერტილები და მცურავი სიტყვები */
+.contact__canvas {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 80px);
+}
+.contact__lead {
+  max-width: 40ch;
+  color: rgba(242, 244, 243, 0.75);
+}
+
+/* პირდაპირი კონტაქტები */
+.direct {
+  display: grid;
+  gap: 14px;
+  margin-top: clamp(24px, 3vw, 40px);
+}
+.direct li {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+.direct__label {
+  color: rgba(242, 244, 243, 0.6);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.copy-btn.messenger-btn {
+  text-decoration: none;
+  background: transparent;
+  color: var(--on-dark);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+.copy-btn.messenger-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.messenger-btn .dot-btn {
+  background: var(--mint);
+  color: var(--ink);
+}
+
+/* ფორმა ბარათზე — ნახევრად გამჭვირვალე, რომ სიტყვები უკნიდან "შევიდეს" */
+.brief {
+  display: grid;
+  gap: 18px;
+  padding: clamp(20px, 2.6vw, 34px);
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.brief__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.field__label {
+  padding: 0;
+  color: rgba(242, 244, 243, 0.7);
+  font-size: 0.8rem;
+}
+.field__label em {
+  font-style: normal;
+  opacity: 0.6;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--on-dark);
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition:
+    border-color 0.25s,
+    background 0.25s;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(242, 244, 243, 0.38);
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--mint);
+  background: rgba(0, 0, 0, 0.28);
+}
+.field.is-invalid input {
+  border-color: #ff8a8a;
+}
+
+/* "რა გჭირდებათ?" — ტეგები, რამდენიმეს მონიშვნით */
+.tag-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-pick label {
+  position: relative;
+  cursor: pointer;
+}
+.tag-pick input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.tag-pick span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 0.86rem;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s,
+    transform 0.25s var(--ease);
+}
+.tag-pick span::before {
+  content: "+";
+  display: inline-block;
+  transition: transform 0.35s var(--ease);
+}
+.tag-pick label:hover span {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.tag-pick input:checked + span {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--ink);
+}
+.tag-pick input:checked + span::before {
+  transform: rotate(45deg);
+}
+.tag-pick input:focus-visible + span {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+.tag-pick label:active span {
+  transform: scale(0.95);
+}
+
+.brief__submit {
+  justify-content: center;
+  width: 100%;
+  padding-block: 16px;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.4s;
+}
+/* სიტყვის "შთანთქმისას" ღილაკი მცირედ ანათებს */
+.brief__submit.is-absorbing {
+  box-shadow: 0 0 0 6px rgba(79, 209, 165, 0.22);
+}
+.brief__status {
+  min-height: 1.4em;
+  color: var(--mint);
+  font-size: 0.85rem;
+}
+.brief__status.is-error {
+  color: #ff9c9c;
+}
+
+.copy-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  padding: 5px 5px 5px 24px;
+  border-radius: 999px;
+  background: var(--on-dark);
+  color: var(--ink);
+  font-size: clamp(0.95rem, 0.8rem + 0.5vw, 1.2rem);
+  font-weight: 600;
+  transition:
+    background 0.3s,
+    transform 0.25s var(--ease);
+}
+.copy-btn__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.copy-btn.is-copied {
+  background: var(--mint);
+}
+.copy-btn.is-copied .dot-btn {
+  transform: rotate(360deg);
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: clamp(24px, 3vw, 40px);
+}
+.socials a {
+  display: inline-flex;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+.socials a:hover {
+  background: var(--on-dark);
+  color: var(--plum);
+}
+
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: clamp(48px, 7vw, 96px);
+  padding: 8px;
+  border-radius: 999px;
+  background: var(--charcoal);
+  color: var(--on-dark-muted);
+  font-size: 0.85rem;
+}
+.footer-bar .dot-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.9s var(--ease) calc(var(--d, 0) * 90ms),
+    transform 0.9s var(--ease) calc(var(--d, 0) * 90ms);
+}
+.js [data-reveal="right"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 100% round var(--r-lg));
+  transition: clip-path 1.1s var(--ease) calc(var(--d, 0) * 90ms);
+}
+.js [data-reveal="right"].is-visible {
+  clip-path: inset(0 0 0 0 round var(--r-lg) 0 0 var(--r-lg));
+}
+.js [data-reveal="scale"] {
+  transform: translateY(40px) scale(0.94);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* ტაბლეტი */
+@media (max-width: 1023px) {
+  .projects {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+  .project {
+    aspect-ratio: 4 / 3.4;
+  }
+  .project--lg {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .services__inner,
+  .process__grid {
+    grid-template-columns: 1fr;
+  }
+  .process__intro {
+    position: static;
+  }
+}
+
+@media (max-width: 900px) {
+  .contact__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nav__toggle {
+    display: block;
+  }
+  .lang-toggle {
+    margin-left: auto;
+  }
+
+  .scenes {
+    top: 34%;
+    right: -12%;
+    width: 110%;
+    opacity: 0.7;
+  }
+
+  .nav__links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 10px;
+    border-radius: 28px;
+    background: var(--charcoal);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top center;
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.45s var(--ease),
+      visibility 0s 0.45s;
+  }
+  .nav.is-open .nav__links {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.45s var(--ease),
+      visibility 0s 0s;
+  }
+  .nav__links li {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.4s var(--ease),
+      transform 0.4s var(--ease);
+    transition-delay: calc(var(--i, 0) * 50ms);
+  }
+  .nav.is-open .nav__links li {
+    opacity: 1;
+    transform: none;
+  }
+  .nav__links a {
+    padding: 14px 18px;
+    color: var(--on-dark);
+    font-size: 1.05rem;
+  }
+  .nav__indicator {
+    display: none;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "main" "side" "stats" "marquee";
+  }
+  .hero__side {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .hero__stats {
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
+    align-self: start;
+  }
+  .stat-card {
+    width: auto;
+  }
+
+  .about__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .terminal {
+    margin: -24px 0 0 12px;
+    width: calc(100% - 12px);
+  }
+  .studio-word {
+    margin-top: 0;
+  }
+}
+
+/* ტელეფონი */
+@media (max-width: 600px) {
+  .brief__row {
+    grid-template-columns: 1fr;
+  }
+  .hero__inner {
+    padding-top: calc(var(--nav-h) + 48px);
+  }
+  .stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+  }
+  .project,
+  .project--lg {
+    aspect-ratio: 4 / 4.2;
+  }
+  .project--lg .project__shot {
+    top: 30%;
+  }
+  .pm-cols {
+    grid-template-columns: 1fr;
+  }
+  .pm-gallery {
+    flex-wrap: wrap;
+  }
+  .pm-shot--mobile {
+    flex-basis: 40%;
+  }
+
+  /* ფანჯარა ქვემოდან ამოსრიალდება და მთელ ეკრანს იკავებს */
+  .modal {
+    padding: 0;
+  }
+  .modal[open] {
+    place-items: end stretch;
+  }
+  .modal__panel {
+    width: 100%;
+    height: 100%;
+    border-radius: 22px 22px 0 0;
+    animation: sheet-in 0.5s var(--ease);
+  }
+  .modal.is-closing .modal__panel {
+    animation: sheet-out 0.32s ease forwards;
+  }
+  .pm-top {
+    padding-right: 48px;
+  }
+  .pm-visit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-bar p {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav {
+    gap: 6px;
+  }
+  .nav .nav__logo {
+    padding: 0 4px;
+  }
+  .nav .nav__logo img {
+    height: 28px;
+  }
+  .lang-toggle,
+  .theme-toggle,
+  .nav__toggle {
+    width: 38px;
+    height: 38px;
+  }
+  .nav__toggle span {
+    left: 11px;
+  }
+  .nav__toggle span:first-child {
+    top: 15px;
+  }
+  .nav__toggle span:last-child {
+    top: 22px;
+  }
+  .nav.is-open .nav__toggle span:first-child,
+  .nav.is-open .nav__toggle span:last-child {
+    top: 18.5px;
+  }
+  .nav__cta {
+    padding: 4px;
+  }
+  .nav__cta > span:first-child {
+    display: none;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  .code .line {
+    opacity: 1;
+    transform: none;
+  }
+  .pill-stack__line {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes sheet-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* =========================================================
+   ABOUT — მთლიანი სექცია ერთ ეკრანზე (დესკტოპი/ტაბლეტი)
+   ზომები ფანჯრის სიმაღლიდან (vh) მოდის
+   ========================================================= */
+@media (min-width: 901px) {
+  #about {
+    scroll-margin-top: -96px;
+  } /* html-ის scroll-padding-ს აბათილებს */
+  .about {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: calc(var(--nav-h) + 40px + 2vh) 4vh;
+  }
+  .about__grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+    margin-top: 0;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .about__text {
+    gap: clamp(12px, 2.4vh, 26px);
+    padding-top: 0;
+  }
+  .pill-stack {
+    font-size: clamp(1.4rem, min(2.6vw, 5vh), 3.3rem);
+  }
+  .lead {
+    font-size: clamp(0.86rem, 1.9vh, 1.05rem);
+  }
+  .studio-word {
+    margin-top: 0;
+  }
+  .studio-word span {
+    font-size: min(clamp(4.5rem, 2rem + 10vw, 11rem), 21vw, 14vh);
+  }
+
+  .about__visual {
+    margin-top: 0;
+  }
+  .code-card {
+    padding-block: clamp(14px, 2.6vh, 32px);
+  }
+  .code-card__bar {
+    margin-bottom: clamp(8px, 1.6vh, 18px);
+  }
+  .code {
+    font-size: clamp(0.62rem, 1.5vh, 0.9rem);
+    line-height: 1.75;
+  }
+  .terminal {
+    font-size: clamp(0.6rem, 1.32vh, 0.82rem);
+    padding-block: clamp(8px, 1.3vh, 12px) clamp(10px, 1.9vh, 18px);
+  }
+  .terminal__bar {
+    margin-bottom: clamp(4px, 1vh, 10px);
+    padding-bottom: clamp(4px, 1vh, 10px);
+  }
+}

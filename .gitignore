@@ -1,0 +1,5 @@
+.DS_Store
+.claude/
+
+# ორიგინალი სქრინშოტები — საიტი იყენებს images/*-1.jpg ვერსიებს
+images/Screenshot*.png

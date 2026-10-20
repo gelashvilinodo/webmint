@@ -1,0 +1,1652 @@
+<!doctype html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebMint — ციფრული სტუდია</title>
+    <meta
+      name="description"
+      content="WebMint — თანამედროვე ვებსაიტები და ვებ-აპლიკაციები, მორგებული ყველა მოწყობილობაზე."
+    />
+    <meta name="theme-color" content="#161618" />
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      // თემა იტვირთება გვერდის დახატვამდე, რომ არ "აციმციმდეს"
+      (function () {
+        var root = document.documentElement,
+          theme;
+        try {
+          theme = localStorage.getItem("wm-theme");
+        } catch (e) {}
+        if (theme !== "light" && theme !== "dark") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+        root.dataset.theme = theme;
+        root.classList.add("js");
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true">
+      <span class="progress__bar"></span>
+    </div>
+
+    <!-- ============ NAV ============ -->
+    <nav class="nav" aria-label="მთავარი ნავიგაცია">
+      <a href="#top" class="nav__logo" aria-label="WebMint — მთავარი">
+        <img src="images/leaflogo.svg" alt="WebMint" />
+      </a>
+
+      <ul class="nav__links" id="nav-links">
+        <li class="nav__indicator" aria-hidden="true"></li>
+        <li style="--i: 1"><a href="#about">სტუდია</a></li>
+        <li style="--i: 2"><a href="#work">პროექტები</a></li>
+        <li style="--i: 3"><a href="#services">სერვისები</a></li>
+        <li style="--i: 4"><a href="#process">პროცესი</a></li>
+        <li style="--i: 5"><a href="#contact">კონტაქტი</a></li>
+      </ul>
+
+      <!-- ენის გადამრთველი (js/i18n.js) -->
+      <button
+        class="lang-toggle"
+        type="button"
+        aria-label="Switch to English"
+        data-ripple
+      >
+        <span class="lang-toggle__text">EN</span>
+      </button>
+
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-pressed="false"
+        aria-label="ღამის რეჟიმი"
+        data-ripple
+      >
+        <svg
+          class="theme-toggle__sun"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+          />
+        </svg>
+        <svg
+          class="theme-toggle__moon"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z" />
+        </svg>
+      </button>
+
+      <a href="#contact" class="nav__cta" data-ripple>
+        <span>დაგვიკავშირდით</span>
+        <span class="dot-btn" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M7 17 17 7M8 7h9v9" />
+          </svg>
+        </span>
+      </a>
+
+      <button
+        class="nav__toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-links"
+        aria-label="მენიუს გახსნა"
+      >
+        <span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- ============ HERO (header) ============ -->
+    <header class="hero" id="top">
+      <div class="hero__bg" aria-hidden="true">
+        <span class="blob blob--mint"></span>
+        <span class="blob blob--plum"></span>
+        <span class="hero__grid"></span>
+
+        <!-- ფონის სილუეტები — თითო ცვალებად სიტყვაზე (data-scene ემთხვევა სიტყვას) -->
+        <div class="scenes">
+          <!-- ვებსაიტით: ბრაუზერის ფანჯარა -->
+          <svg
+            class="scene"
+            data-scene="web"
+            viewBox="0 0 800 600"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <rect
+              class="d"
+              x="80"
+              y="70"
+              width="640"
+              height="460"
+              rx="26"
+              pathLength="1"
+            />
+            <path class="d" d="M80 134H720" pathLength="1" />
+            <circle class="d p" cx="118" cy="102" r="9" pathLength="1" />
+            <circle class="d" cx="148" cy="102" r="9" pathLength="1" />
+            <circle class="d a" cx="178" cy="102" r="9" pathLength="1" />
+            <rect
+              class="d"
+              x="230"
+              y="88"
+              width="340"
+              height="28"
+              rx="14"
+              pathLength="1"
+            />
+            <rect
+              class="d a"
+              x="120"
+              y="172"
+              width="560"
+              height="150"
+              rx="16"
+              pathLength="1"
+            />
+            <path class="d" d="M120 366H430M120 396H350" pathLength="1" />
+            <rect
+              class="d"
+              x="120"
+              y="434"
+              width="172"
+              height="62"
+              rx="12"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="314"
+              y="434"
+              width="172"
+              height="62"
+              rx="12"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="508"
+              y="434"
+              width="172"
+              height="62"
+              rx="12"
+              pathLength="1"
+            />
+          </svg>
+
+          <!-- აპლიკაციით: ტელეფონი აპების ბადით, შეტყობინება და გადამრთველი -->
+          <svg
+            class="scene"
+            data-scene="app"
+            viewBox="0 0 800 600"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <rect
+              class="d"
+              x="290"
+              y="40"
+              width="220"
+              height="520"
+              rx="38"
+              pathLength="1"
+            />
+            <path class="d" d="M372 64H428" pathLength="1" />
+            <rect
+              class="d a"
+              x="322"
+              y="110"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="377"
+              y="110"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="432"
+              y="110"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="322"
+              y="170"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d p"
+              x="377"
+              y="170"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="432"
+              y="170"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="322"
+              y="230"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="377"
+              y="230"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <rect
+              class="d a"
+              x="432"
+              y="230"
+              width="46"
+              height="46"
+              rx="13"
+              pathLength="1"
+            />
+            <path class="d" d="M360 528H440" pathLength="1" />
+            <rect
+              class="d a"
+              x="455"
+              y="330"
+              width="250"
+              height="76"
+              rx="20"
+              pathLength="1"
+            />
+            <circle class="d a" cx="494" cy="368" r="18" pathLength="1" />
+            <path class="d" d="M526 356H660M526 380H610" pathLength="1" />
+            <rect
+              class="d"
+              x="110"
+              y="400"
+              width="120"
+              height="60"
+              rx="30"
+              pathLength="1"
+            />
+            <circle class="d p" cx="200" cy="430" r="22" pathLength="1" />
+          </svg>
+
+          <!-- სისტემით: დაკავშირებული წერტილები -->
+          <svg
+            class="scene"
+            data-scene="system"
+            viewBox="0 0 800 600"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <path
+              class="d"
+              d="M150 150L320 90L480 200L650 120M150 150L250 330L420 380L600 330L650 120M320 90L420 380M480 200L600 330M250 330L180 500L420 380L520 520L700 470L600 330M480 200L420 380"
+              pathLength="1"
+            />
+            <circle class="d" cx="150" cy="150" r="9" pathLength="1" />
+            <circle class="d" cx="320" cy="90" r="9" pathLength="1" />
+            <circle class="d a" cx="480" cy="200" r="12" pathLength="1" />
+            <circle class="d" cx="650" cy="120" r="9" pathLength="1" />
+            <circle class="d p" cx="250" cy="330" r="12" pathLength="1" />
+            <circle class="d a" cx="420" cy="380" r="22" pathLength="1" />
+            <circle class="d" cx="600" cy="330" r="9" pathLength="1" />
+            <circle class="d" cx="180" cy="500" r="9" pathLength="1" />
+            <circle class="d p" cx="520" cy="520" r="12" pathLength="1" />
+            <circle class="d" cx="700" cy="470" r="9" pathLength="1" />
+            <circle class="f a" cx="420" cy="380" r="7" />
+          </svg>
+
+          <!-- დიზაინით: ბეზიეს მრუდი სახელურებით + ფერების პალიტრა -->
+          <svg
+            class="scene"
+            data-scene="design"
+            viewBox="0 0 800 600"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <path
+              class="d"
+              d="M100 480L250 130M710 170L540 560"
+              pathLength="1"
+            />
+            <path
+              class="d a w"
+              d="M100 480C250 130 540 560 710 170"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="90"
+              y="470"
+              width="20"
+              height="20"
+              rx="3"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="700"
+              y="160"
+              width="20"
+              height="20"
+              rx="3"
+              pathLength="1"
+            />
+            <circle class="d p" cx="250" cy="130" r="10" pathLength="1" />
+            <circle class="d p" cx="540" cy="560" r="10" pathLength="1" />
+            <rect
+              class="d"
+              x="440"
+              y="50"
+              width="300"
+              height="76"
+              rx="38"
+              pathLength="1"
+            />
+            <circle class="f a" cx="484" cy="88" r="22" />
+            <circle class="f p" cx="548" cy="88" r="22" />
+            <circle class="f w" cx="612" cy="88" r="22" />
+            <circle class="d" cx="676" cy="88" r="22" pathLength="1" />
+          </svg>
+
+          <!-- კამპანიით: ზრდის გრაფიკი -->
+          <svg
+            class="scene"
+            data-scene="campaign"
+            viewBox="0 0 800 600"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <path class="d" d="M100 70V510H730" pathLength="1" />
+            <path
+              class="f dash"
+              d="M100 400H730M100 290H730M100 180H730"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="150"
+              y="440"
+              width="60"
+              height="70"
+              rx="8"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="250"
+              y="400"
+              width="60"
+              height="110"
+              rx="8"
+              pathLength="1"
+            />
+            <rect
+              class="d"
+              x="350"
+              y="350"
+              width="60"
+              height="160"
+              rx="8"
+              pathLength="1"
+            />
+            <rect
+              class="d p"
+              x="450"
+              y="280"
+              width="60"
+              height="230"
+              rx="8"
+              pathLength="1"
+            />
+            <rect
+              class="d p"
+              x="550"
+              y="200"
+              width="60"
+              height="310"
+              rx="8"
+              pathLength="1"
+            />
+            <path
+              class="d a w"
+              d="M180 420L280 375L380 330L480 250L580 170L690 95"
+              pathLength="1"
+            />
+            <path class="d a w" d="M648 92H692V136" pathLength="1" />
+            <circle class="f a" cx="280" cy="375" r="7" />
+            <circle class="f a" cx="380" cy="330" r="7" />
+            <circle class="f a" cx="480" cy="250" r="7" />
+            <circle class="f a" cx="580" cy="170" r="7" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero__inner">
+        <div class="hero__main">
+          <!-- <p class="tag"><span class="tag__dot"></span>Software Developer</p> -->
+          <h1
+            class="hero__title"
+            aria-label="ზრდა იწყება ვებსაიტით, აპლიკაციით, სისტემით, დიზაინით და კამპანიით და გრძელდება შედეგით."
+          >
+            <span aria-hidden="true"
+              >ზრდა იწყება
+              <span class="rotator">
+                <span class="rotator__word is-active" data-scene="web"
+                  >ვებსაიტით</span
+                >
+                <span class="rotator__word" data-scene="app">აპლიკაციით</span>
+                <span class="rotator__word" data-scene="system">სისტემით</span>
+                <span class="rotator__word" data-scene="design">დიზაინით</span>
+                <span class="rotator__word" data-scene="campaign"
+                  >კამპანიით</span
+                > </span
+              ><br />
+              და გრძელდება <em class="outline">შედეგით</em>.
+            </span>
+          </h1>
+        </div>
+
+        <aside class="hero__side">
+          <p class="hero__lead">
+            ყველაფერი, რაც თქვენს ბრენდს სჭირდება ციფრულ სამყაროში — ერთ
+            ადგილას.
+          </p>
+        </aside>
+
+        <div class="hero__stats">
+          <div class="stat-card">
+            <strong data-count="4" data-suffix="+">0</strong>
+            <span>წელი<br />გამოცდილება</span>
+          </div>
+          <div class="stat-card">
+            <strong data-count="40" data-suffix="+">0</strong>
+            <span>დასრულებული<br />პროექტი</span>
+          </div>
+        </div>
+
+        <div class="hero__marquee marquee" aria-label="ტექნოლოგიები">
+          <div class="marquee__track">
+            <ul>
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>JavaScript</li>
+              <li>TypeScript</li>
+              <li>React</li>
+              <li>Node.js</li>
+              <li>GSAP</li>
+              <li>Figma</li>
+              <li>SEO</li>
+              <li>Meta Ads</li>
+              <li>Google Ads</li>
+            </ul>
+            <ul aria-hidden="true">
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>JavaScript</li>
+              <li>TypeScript</li>
+              <li>React</li>
+              <li>Node.js</li>
+              <li>GSAP</li>
+              <li>Figma</li>
+              <li>SEO</li>
+              <li>Meta Ads</li>
+              <li>Google Ads</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ქვედა "ენა" ჩაზნექილი კუთხეებით -->
+      <div class="hero__tab">
+        <a href="#about" class="scroll-btn" data-ripple>
+          <span>გაიგეთ მეტი</span>
+          <span class="dot-btn" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 5v14M6 13l6 6 6-6" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ ABOUT ============ -->
+      <section class="section about" id="about">
+        <div class="about__grid">
+          <div class="about__text">
+            <span class="label-pill">01 — სტუდია</span>
+            <!-- სამი "აბი": მინტი, მუქი, მხოლოდ კონტური — სქროლზე რიგრიგობით შემოდის -->
+            <h2 class="pill-stack" data-scrub>
+              <span class="pill-stack__line" style="--i: 0"
+                ><span class="pill pill--mint"
+                  >დიზაინი, რომელიც ჩანს.</span
+                ></span
+              >
+              <span class="pill-stack__line" style="--i: 1"
+                ><span class="pill pill--dark"
+                  >კოდი, რომელიც მუშაობს.</span
+                ></span
+              >
+              <span class="pill-stack__line" style="--i: 2"
+                ><span class="pill pill--outline"
+                  >მარკეტინგი, რომელიც ყიდის.</span
+                ></span
+              >
+            </h2>
+            <p class="lead" data-reveal>
+              WebMint ციფრული სტუდიაა, რომელიც დიზაინს, დეველოპმენტსა და
+              მარკეტინგს ერთ გუნდში აერთიანებს. ბრენდიდან საიტამდე და საიტიდან
+              კამპანიამდე ყველაფერი ერთ ხელშია და ერთ მიზანს ემსახურება: თქვენი
+              ბიზნესის ზრდას.
+            </p>
+            <a
+              href="#work"
+              class="btn btn--dark"
+              data-reveal
+              style="--d: 1"
+              data-ripple
+            >
+              ნახეთ ნამუშევრები
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 17 17 7M8 7h9v9" />
+              </svg>
+            </a>
+            <span class="studio-word" aria-hidden="true"
+              ><span data-parallax="0.05">STUDIO</span></span
+            >
+          </div>
+
+          <div class="about__visual">
+            <div
+              class="code-card"
+              data-reveal="right"
+              aria-label="კოდის მაგალითი"
+            >
+              <div class="code-card__bar" aria-hidden="true">
+                <i></i><i></i><i></i><span>webmint.studio.js</span>
+              </div>
+              <!-- prettier-ignore -->
+              <code class="code">
+                <span class="line"><span class="c">// webmint.studio.js</span></span>
+                <span class="line"><span class="k">const</span> studio = {</span>
+                <span class="line">  <span class="p">name</span>: <span class="s">"WebMint"</span>,</span>
+                <span class="line">  <span class="p">crafts</span>: [<span class="s">"design"</span>, <span class="s">"development"</span>, <span class="s">"marketing"</span>],</span>
+                <span class="line">  <span class="p">principle</span>: <span class="s">"less noise, more growth"</span>,</span>
+                <span class="line">};</span>
+                <span class="line"> </span>
+                <span class="line"><span class="k">async function</span> <span class="f">grow</span>(idea) {</span>
+                <span class="line">  <span class="k">const</span> brand = <span class="k">await</span> <span class="f">design</span>(idea);</span>
+                <span class="line">  <span class="k">const</span> site  = <span class="k">await</span> <span class="f">develop</span>(brand);</span>
+                <span class="line">  <span class="k">return</span> <span class="f">launch</span>(site).<span class="f">then</span>(promote);</span>
+                <span class="line">}</span>
+                <span class="line"> </span>
+                <span class="line"><span class="f">grow</span>(<span class="s">"თქვენი იდეა"</span>); <span class="c">// → ზრდა</span></span>
+              </code>
+            </div>
+
+            <!-- ტერმინალი — სქროლზე იწყებს ბეჭდვას -->
+            <div
+              class="terminal"
+              data-reveal
+              style="--d: 2"
+              role="group"
+              aria-label="ტერმინალი"
+            >
+              <p class="sr-only">
+                webmint new "თქვენი პროექტი": ბრენდის იდენტობა შექმნილია,
+                დიზაინი დამტკიცებულია, ვებსაიტი აწყობილია, კამპანია გაშვებულია.
+                ზრდა იწყება.
+              </p>
+              <div class="terminal__bar" aria-hidden="true">
+                <i></i><i></i><i></i><span>zsh — webmint</span>
+              </div>
+              <!-- prettier-ignore -->
+              <div class="terminal__body" aria-hidden="true">
+                <div class="t-line is-on"><span class="t-static t-prompt">$</span> <span data-type="55">webmint new </span><span class="t-str" data-type="55" data-pause="500">"თქვენი პროექტი"</span><span class="t-cursor"></span></div>
+                <div class="t-line"></div>
+                <div class="t-line t-row"><span class="t-static t-ok">✓</span><span><span data-type="26" data-pause="60">ბრენდის იდენტობა</span></span><span class="t-status"><span data-type="20" data-pause="220">შექმნილია</span></span></div>
+                <div class="t-line t-row"><span class="t-static t-ok">✓</span><span><span data-type="26" data-pause="60">დიზაინი</span></span><span class="t-status"><span data-type="20" data-pause="220">დამტკიცებულია</span></span></div>
+                <div class="t-line t-row"><span class="t-static t-ok">✓</span><span><span data-type="26" data-pause="60">ვებსაიტი</span></span><span class="t-status"><span data-type="20" data-pause="220">აწყობილია</span></span></div>
+                <div class="t-line t-row"><span class="t-static t-ok">✓</span><span><span data-type="26" data-pause="60">კამპანია</span></span><span class="t-status"><span data-type="20" data-pause="400">გაშვებულია</span></span></div>
+                <div class="t-line"></div>
+                <div class="t-line t-final"><span class="t-static t-arrow">→</span> <span data-type="70">ზრდა იწყება...</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WORK (bento) ============ -->
+      <section class="section work" id="work">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="label-pill">02 — პროექტები</span>
+            <h2 class="pill-stack" data-scrub>
+              <span class="pill-stack__line"
+                ><span class="pill pill--mint">შერჩეული ნამუშევრები</span></span
+              >
+            </h2>
+          </div>
+          <!-- ახალი პროექტების დამატების შემდეგ აქ დააბრუნეთ "ყველა პროექტი" -->
+          <a href="#contact" class="btn btn--dark" data-ripple>
+            დავიწყოთ თქვენი
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- მთლიანი ქარდი დაჭერადია (.project__open) და ხსნის ფანჯარას შესაბამისი <template>-იდან -->
+        <div class="projects">
+          <article
+            class="project project--marteo project--lg"
+            data-reveal="scale"
+          >
+            <button
+              class="project__open"
+              type="button"
+              data-project="marteo"
+              aria-label="Marteo — პროექტის დეტალები"
+            ></button>
+            <div class="project__head">
+              <div>
+                <h3 class="project__name">Marteo</h3>
+                <p class="project__meta">ბიზნესის მართვის პლატფორმა · 2026</p>
+              </div>
+              <span class="project__arrow" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" /></svg
+              ></span>
+            </div>
+            <div class="project__shot">
+              <div class="browser">
+                <div class="browser__bar" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </div>
+                <img
+                  src="images/marteo-1.jpg"
+                  alt="Marteo-ს მართვის პანელი"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="project__reveal">
+              <p>
+                შეკვეთები, მარაგები და ხარჯები ერთ სივრცეში, მოგების ავტომატური
+                დათვლითა და ანალიტიკით.
+              </p>
+              <ul class="project__tags">
+                <li>UI/UX დიზაინი</li>
+                <li>დეველოპმენტი</li>
+              </ul>
+            </div>
+          </article>
+
+          <article
+            class="project project--sunleon"
+            data-reveal="scale"
+            style="--d: 1"
+          >
+            <button
+              class="project__open"
+              type="button"
+              data-project="sunleon"
+              aria-label="SunLeon — პროექტის დეტალები"
+            ></button>
+            <div class="project__head">
+              <div>
+                <h3 class="project__name">SunLeon</h3>
+                <!-- TODO: დაამატეთ წელი -> "ონლაინ მაღაზია · 20XX" -->
+                <p class="project__meta">ონლაინ მაღაზია</p>
+              </div>
+              <span class="project__arrow" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" /></svg
+              ></span>
+            </div>
+            <div class="project__shot">
+              <div class="browser">
+                <div class="browser__bar" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </div>
+                <img
+                  src="images/sunleon-1.jpg"
+                  alt="SunLeon-ის ონლაინ მაღაზია"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="project__reveal">
+              <p>პრემიუმ ჩანთების მაღაზია ელეგანტური, ორნამენტული ვიზუალით.</p>
+              <ul class="project__tags">
+                <li>დიზაინი</li>
+                <li>დეველოპმენტი</li>
+              </ul>
+            </div>
+          </article>
+
+          <article
+            class="project project--botanica"
+            data-reveal="scale"
+            style="--d: 2"
+          >
+            <button
+              class="project__open"
+              type="button"
+              data-project="botanica"
+              aria-label="Botanica — პროექტის დეტალები"
+            ></button>
+            <div class="project__head">
+              <div>
+                <h3 class="project__name">Botanica</h3>
+                <p class="project__meta">E-commerce · კონცეფცია</p>
+              </div>
+              <span class="project__arrow" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" /></svg
+              ></span>
+            </div>
+            <div class="project__shot">
+              <div class="browser">
+                <div class="browser__bar" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </div>
+                <img
+                  src="images/botanica-1.jpg"
+                  alt="Botanica-ს ონლაინ მაღაზიის მთავარი გვერდი"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="project__reveal">
+              <p>
+                მცენარეული დანამატების ბრენდის ონლაინ მაღაზია, მშვიდი და
+                ბუნებრივი ესთეტიკით.
+              </p>
+              <ul class="project__tags">
+                <li>დიზაინი</li>
+                <li>დეველოპმენტი</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- ============ პროექტების ფანჯრის კონტენტი ============
+                 თითო <template> = თითო პროექტი. id = "project-" + ქარდის data-project.
+                 გალერეაში შეგიძლიათ 2–4 სქრინშოტი ჩასვათ; მობილურის ხედისთვის:
+                 <figure class="pm-shot pm-shot--mobile"><img src="images/..." alt=""></figure> -->
+
+        <template id="project-marteo" data-name="Marteo">
+          <div class="pm-top">
+            <div>
+              <p class="pm-meta">ბიზნესის მართვის პლატფორმა · 2026</p>
+              <h3 class="pm-title" id="pm-title">Marteo</h3>
+            </div>
+            <!-- TODO: href-ში ჩასვით პლატფორმის ბმული -->
+            <a
+              class="btn btn--mint pm-visit"
+              href="https://marteo.ge/"
+              target="_blank"
+              rel="noopener"
+              data-ripple
+              >პლატფორმის ნახვა ↗</a
+            >
+          </div>
+          <div class="pm-gallery">
+            <figure class="pm-shot">
+              <img
+                src="images/marteo-1.jpg"
+                alt="Marteo-ს მთავარი პანელი: გაყიდვები, მოგება, ხარჯები"
+              />
+            </figure>
+          </div>
+          <section class="pm-block">
+            <h4>მოკლედ</h4>
+            <p>
+              Marteo მცირე და საშუალო ბიზნესისთვის შექმნილი მართვის პლატფორმაა.
+              მფლობელი აქ ამატებს შეკვეთებს, შესყიდვებსა და მარაგებს, სისტემა კი
+              თავად ითვლის მოგებას და ბიზნესის სრულ სურათს აჩვენებს.
+            </p>
+          </section>
+          <div class="pm-cols">
+            <section class="pm-block">
+              <h4>ამოცანა</h4>
+              <p>
+                მცირე ბიზნესები აღრიცხვას ხშირად რვეულში ან Excel-ის ცხრილებში
+                აწარმოებენ. მონაცემები სხვადასხვა ადგილას იფანტება, მოგება ხელით
+                ითვლება, ხოლო ზუსტი სურათი, თუ რა იყიდება და სად იხარჯება ფული,
+                არავის აქვს.
+              </p>
+            </section>
+            <section class="pm-block">
+              <h4>გადაწყვეტა</h4>
+              <p>
+                შევქმენით ერთი, მარტივად გასაგები პანელი, სადაც ბიზნესის ყველა
+                ციფრი ერთ ეკრანზე ჩანს. მომხმარებელი მხოლოდ მონაცემებს ამატებს,
+                დანარჩენს — დათვლასა და ანალიზს — სისტემა აკეთებს.
+              </p>
+            </section>
+          </div>
+          <section class="pm-block">
+            <h4>ძირითადი ფუნქციები</h4>
+            <ul class="pm-list">
+              <li>შეკვეთების მართვა და ისტორია</li>
+              <li>მარაგების რეალურ დროში აღრიცხვა</li>
+              <li>შესყიდვებისა და ხარჯების კონტროლი</li>
+              <li>სუფთა მოგების ავტომატური დათვლა</li>
+              <li>ანალიტიკა და სტატისტიკა გრაფიკებით</li>
+              <li>მომხმარებლების ბაზა</li>
+              <li>კონტენტ-კალენდარი</li>
+            </ul>
+          </section>
+          <div class="pm-cols">
+            <section class="pm-block">
+              <h4>რა გავაკეთეთ</h4>
+              <ul class="pm-tags">
+                <li>UI/UX დიზაინი</li>
+                <li>ფრონტენდ დეველოპმენტი</li>
+                <li>ბექენდ დეველოპმენტი</li>
+              </ul>
+            </section>
+            <!-- TODO: ჩაწერეთ რეალური სტეკი და წაშალეთ კომენტარი
+                    <section class="pm-block">
+                        <h4>ტექნოლოგიები</h4>
+                        <ul class="pm-tags"><li>...</li></ul>
+                    </section> -->
+          </div>
+        </template>
+
+        <template id="project-sunleon" data-name="SunLeon">
+          <div class="pm-top">
+            <div>
+              <p class="pm-meta">ონლაინ მაღაზია</p>
+              <h3 class="pm-title" id="pm-title">SunLeon</h3>
+            </div>
+            <a
+              class="btn btn--mint pm-visit"
+              href="https://sunleonbags.com/"
+              target="_blank"
+              rel="noopener"
+              data-ripple
+              >მაღაზიის ნახვა ↗</a
+            >
+          </div>
+          <div class="pm-gallery">
+            <figure class="pm-shot">
+              <img
+                src="images/sunleon-1.jpg"
+                alt="SunLeon-ის მთავარი გვერდი ორნამენტული ჩარჩოებით"
+              />
+            </figure>
+          </div>
+          <section class="pm-block">
+            <h4>მოკლედ</h4>
+            <p>
+              SunLeon პრემიუმ ჩანთების ბრენდია. მისი ონლაინ მაღაზია ისე
+              შევქმენით, რომ საიტის დათვალიერება ბუტიკში სეირნობას ჰგავდეს.
+            </p>
+          </section>
+          <div class="pm-cols">
+            <section class="pm-block">
+              <h4>ამოცანა</h4>
+              <p>
+                ბრენდს სჭირდებოდა ონლაინ სივრცე, სადაც პროდუქტის ხარისხი და
+                ესთეტიკა ისევე იგრძნობა, როგორც ცოცხლად. ჩვეულებრივი მაღაზიის
+                შაბლონი ამისთვის არ გამოდგებოდა.
+              </p>
+            </section>
+            <section class="pm-block">
+              <h4>გადაწყვეტა</h4>
+              <p>
+                დიზაინი ავაგეთ კლასიკურ ორნამენტებზე, ოქროსფერ დეტალებსა და
+                სუფთა, ღია ფონზე. პროდუქტები გალერეის ჩარჩოებშია განთავსებული,
+                ამიტომ თითოეული ჩანთა ხელოვნების ნიმუშივით იკითხება.
+              </p>
+            </section>
+          </div>
+          <section class="pm-block">
+            <h4>ძირითადი ფუნქციები</h4>
+            <ul class="pm-list">
+              <li>ელეგანტური კატალოგი და ახალი კოლექციების სექცია</li>
+              <li>ღია და მუქი რეჟიმი</li>
+              <li>Instagram-თან კავშირი</li>
+              <li>სრული მორგება მობილურზე</li>
+            </ul>
+          </section>
+          <div class="pm-cols">
+            <section class="pm-block">
+              <h4>რა გავაკეთეთ</h4>
+              <ul class="pm-tags">
+                <li>ვიზუალური დიზაინი</li>
+                <li>დეველოპმენტი</li>
+                <li>მარკეტინგი</li>
+              </ul>
+            </section>
+          </div>
+        </template>
+
+        <template id="project-botanica" data-name="Botanica">
+          <div class="pm-top">
+            <div>
+              <p class="pm-meta">E-commerce · კონცეფცია</p>
+              <h3 class="pm-title" id="pm-title">Botanica</h3>
+            </div>
+            <a
+              class="btn btn--mint pm-visit"
+              href="https://console-studio.github.io/botanica/index.html"
+              target="_blank"
+              rel="noopener"
+              data-ripple
+              >კონცეფციის ნახვა ↗</a
+            >
+          </div>
+          <div class="pm-gallery">
+            <figure class="pm-shot">
+              <img
+                src="images/botanica-1.jpg"
+                alt="Botanica-ს მთავარი გვერდი: Wellness, rooted in nature"
+              />
+            </figure>
+          </div>
+          <section class="pm-block">
+            <h4>მოკლედ</h4>
+            <p>
+              Botanica მცენარეული საკვები დანამატების ბრენდის კონცეფციაა: ონლაინ
+              მაღაზია, რომელიც ბუნებრიობასა და სანდოობას გადმოსცემს.
+            </p>
+          </section>
+          <div class="pm-cols">
+            <section class="pm-block">
+              <h4>იდეა</h4>
+              <p>
+                Wellness ბრენდისთვის ნდობა ყველაფერია. ამიტომ მიზნად დავისახეთ,
+                საიტს პირველივე წამიდან მშვიდი, სუფთა და „ჯანსაღი“ განცდა
+                შეექმნა.
+              </p>
+            </section>
+            <section class="pm-block">
+              <h4>გადაწყვეტა</h4>
+              <p>
+                გამოვიყენეთ ბუნებრივი პალიტრა (კრემისფერი და ფოთლისფერი),
+                ელეგანტური სერიფული ტიპოგრაფია და ფართო, სუნთქვადი სივრცე.
+                მომხმარებელს პროდუქტის არჩევა თავისი მიზნის მიხედვით შეუძლია
+                (Shop by goal) და არა მხოლოდ კატეგორიით.
+              </p>
+            </section>
+          </div>
+          <section class="pm-block">
+            <h4>ძირითადი ფუნქციები</h4>
+            <ul class="pm-list">
+              <li>პროდუქტის ძებნა მიზნის მიხედვით</li>
+              <li>სურვილების სია და კალათა</li>
+              <li>მინიმალისტური, სწრაფი ინტერფეისი</li>
+            </ul>
+          </section>
+          <div class="pm-cols">
+            <section class="pm-block">
+              <h4>რა გავაკეთეთ</h4>
+              <ul class="pm-tags">
+                <li>კონცეფცია</li>
+                <li>დიზაინი</li>
+                <li>დეველოპმენტი</li>
+              </ul>
+            </section>
+          </div>
+        </template>
+      </section>
+
+      <!-- ============ SERVICES ============ -->
+      <section class="services" id="services">
+        <div class="services__tab">03 — სერვისები</div>
+
+        <div class="services__inner">
+          <div class="services__head">
+            <h2 class="services__title" data-reveal>
+              ერთი გუნდი,<br /><span>ყველა მიმართულება</span>
+            </h2>
+            <p data-reveal style="--d: 1">
+              შეგიძლიათ აირჩიოთ ერთი სერვისი ან მთლიანი პაკეტი. ორივე
+              შემთხვევაში ერთი გუნდი უზრუნველყოფს, რომ ყველაფერი ერთ სტილში და
+              ერთი მიზნით იყოს შექმნილი.
+            </p>
+          </div>
+
+          <!-- ტეგებში — რას იღებს დამკვეთი (არა ტექნოლოგიები) -->
+          <ul class="accordion">
+            <li class="acc is-open" data-reveal>
+              <button
+                class="acc__head"
+                type="button"
+                aria-expanded="true"
+                aria-controls="acc-1"
+                id="acc-btn-1"
+              >
+                <span class="acc__num">01</span>
+                <span class="acc__title">ბრენდინგი და დიზაინი</span>
+                <span class="acc__icon" aria-hidden="true"></span>
+              </button>
+              <div
+                class="acc__panel"
+                id="acc-1"
+                role="region"
+                aria-labelledby="acc-btn-1"
+              >
+                <div class="acc__content">
+                  <div class="acc__body">
+                    <p>
+                      ვქმნით ბრენდის ვიზუალურ სახეს: ლოგოს, ფერებს, ტიპოგრაფიას.
+                      ასევე ვაპროექტებთ საიტებისა და აპლიკაციების ინტერფეისს,
+                      რომელიც ლამაზიც არის და მოსახერხებელიც.
+                    </p>
+                    <ul class="chips">
+                      <li>ლოგო</li>
+                      <li>ბრენდბუქი</li>
+                      <li>UI/UX დიზაინი</li>
+                      <li>პროტოტიპი</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="acc" data-reveal style="--d: 1">
+              <button
+                class="acc__head"
+                type="button"
+                aria-expanded="false"
+                aria-controls="acc-2"
+                id="acc-btn-2"
+              >
+                <span class="acc__num">02</span>
+                <span class="acc__title">ვებსაიტები</span>
+                <span class="acc__icon" aria-hidden="true"></span>
+              </button>
+              <div
+                class="acc__panel"
+                id="acc-2"
+                role="region"
+                aria-labelledby="acc-btn-2"
+              >
+                <div class="acc__content">
+                  <div class="acc__body">
+                    <p>
+                      კორპორატიული საიტები, ლენდინგები და ონლაინ მაღაზიები.
+                      სწრაფი, ყველა ეკრანზე მორგებული და ცოცხალი ანიმაციებით,
+                      რომ ვიზიტორს საიტი დაამახსოვრდეს.
+                    </p>
+                    <ul class="chips">
+                      <li>კორპორატიული საიტი</li>
+                      <li>ლენდინგი</li>
+                      <li>ონლაინ მაღაზია</li>
+                      <li>ანიმაცია</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="acc" data-reveal style="--d: 2">
+              <button
+                class="acc__head"
+                type="button"
+                aria-expanded="false"
+                aria-controls="acc-3"
+                id="acc-btn-3"
+              >
+                <span class="acc__num">03</span>
+                <span class="acc__title">ვებ-აპლიკაციები და სისტემები</span>
+                <span class="acc__icon" aria-hidden="true"></span>
+              </button>
+              <div
+                class="acc__panel"
+                id="acc-3"
+                role="region"
+                aria-labelledby="acc-btn-3"
+              >
+                <div class="acc__content">
+                  <div class="acc__body">
+                    <p>
+                      ბიზნესის საჭიროებებზე მორგებული პლატფორმები: მართვის
+                      პანელები, შიდა სისტემები და ანალიტიკა, რომლებიც რუტინულ
+                      საქმეს ავტომატურად აკეთებს.
+                    </p>
+                    <ul class="chips">
+                      <li>მართვის პანელი</li>
+                      <li>CRM</li>
+                      <li>ანალიტიკა</li>
+                      <li>ინტეგრაციები</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="acc" data-reveal style="--d: 3">
+              <button
+                class="acc__head"
+                type="button"
+                aria-expanded="false"
+                aria-controls="acc-4"
+                id="acc-btn-4"
+              >
+                <span class="acc__num">04</span>
+                <span class="acc__title">ციფრული მარკეტინგი</span>
+                <span class="acc__icon" aria-hidden="true"></span>
+              </button>
+              <div
+                class="acc__panel"
+                id="acc-4"
+                role="region"
+                aria-labelledby="acc-btn-4"
+              >
+                <div class="acc__content">
+                  <div class="acc__body">
+                    <p>
+                      თქვენს ბრენდს სწორ აუდიტორიამდე მივიყვანთ: ვმართავთ
+                      სოციალურ ქსელებს, ვაწყობთ სარეკლამო კამპანიებს და
+                      ვზრუნავთ, რომ საიტი Google-ის ძიებაში მაღლა იყოს.
+                    </p>
+                    <ul class="chips">
+                      <li>SMM</li>
+                      <li>Meta Ads</li>
+                      <li>Google Ads</li>
+                      <li>SEO</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="acc" data-reveal style="--d: 4">
+              <button
+                class="acc__head"
+                type="button"
+                aria-expanded="false"
+                aria-controls="acc-5"
+                id="acc-btn-5"
+              >
+                <span class="acc__num">05</span>
+                <span class="acc__title">მხარდაჭერა და განვითარება</span>
+                <span class="acc__icon" aria-hidden="true"></span>
+              </button>
+              <div
+                class="acc__panel"
+                id="acc-5"
+                role="region"
+                aria-labelledby="acc-btn-5"
+              >
+                <div class="acc__content">
+                  <div class="acc__body">
+                    <p>
+                      გაშვებით საქმე არ მთავრდება. ვზრუნავთ, რომ ყველაფერი
+                      გამართულად მუშაობდეს, ვაახლებთ კონტენტს და პროექტს
+                      ბიზნესთან ერთად ვზრდით.
+                    </p>
+                    <ul class="chips">
+                      <li>ტექნიკური მხარდაჭერა</li>
+                      <li>განახლებები</li>
+                      <li>ოპტიმიზაცია</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ PROCESS ============ -->
+      <section class="section process" id="process">
+        <div class="process__grid">
+          <div class="process__intro">
+            <span class="label-pill">04 — პროცესი</span>
+            <h2 class="pill-stack" data-scrub>
+              <span class="pill-stack__line"
+                ><span class="pill pill--mint">როგორ ვმუშაობთ</span></span
+              >
+            </h2>
+            <p>
+              გამჭვირვალე პროცესი ხუთ ნაბიჯად: ყოველთვის იცით, სად ვართ და რა
+              არის შემდეგი.
+            </p>
+          </div>
+
+          <div class="timeline" data-timeline>
+            <span class="timeline__line" aria-hidden="true"
+              ><span class="timeline__fill"></span
+            ></span>
+            <ol class="steps">
+              <li class="step">
+                <span class="step__dot" aria-hidden="true"></span>
+                <span class="step__num">01</span>
+                <h3>აღმოჩენა</h3>
+                <p>
+                  ვსაუბრობთ თქვენს ბიზნესზე, მიზნებსა და აუდიტორიაზე. ვსწავლობთ
+                  კონკურენტებს და ერთად ვადგენთ პროექტის ფარგლებს, ვადებსა და
+                  ბიუჯეტს.
+                </p>
+              </li>
+              <li class="step">
+                <span class="step__dot" aria-hidden="true"></span>
+                <span class="step__num">02</span>
+                <h3>დიზაინი</h3>
+                <p>
+                  ვქმნით ბრენდის ვიზუალურ სახეს და საიტის სტრუქტურას. დიზაინს
+                  ერთად ვამტკიცებთ, სანამ კოდის ერთ ხაზსაც დავწერთ.
+                </p>
+              </li>
+              <li class="step">
+                <span class="step__dot" aria-hidden="true"></span>
+                <span class="step__num">03</span>
+                <h3>დეველოპმენტი</h3>
+                <p>
+                  დამტკიცებულ დიზაინს ვაცოცხლებთ: ვწერთ სუფთა, სწრაფ კოდს და
+                  ვამოწმებთ ყველა მოწყობილობასა და ბრაუზერზე.
+                </p>
+              </li>
+              <li class="step">
+                <span class="step__dot" aria-hidden="true"></span>
+                <span class="step__num">04</span>
+                <h3>გაშვება</h3>
+                <p>
+                  ვუშვებთ პროექტს, ვამოწმებთ ყველა დეტალს და გაჩვენებთ, როგორ
+                  მართოთ ის მარტივად.
+                </p>
+              </li>
+              <li class="step">
+                <span class="step__dot" aria-hidden="true"></span>
+                <span class="step__num">05</span>
+                <h3>ზრდა</h3>
+                <p>
+                  გაშვების შემდეგ ვიწყებთ მარკეტინგს: სოციალურ ქსელებს,
+                  სარეკლამო კამპანიებსა და SEO-ს. ვაკვირდებით შედეგებს და
+                  პროექტს ბიზნესთან ერთად ვავითარებთ.
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ CONTACT / FOOTER ============ -->
+    <footer class="contact" id="contact">
+      <span class="contact__glow" aria-hidden="true"></span>
+      <!-- ფონი: მოძრავი წერტილები + ღილაკისკენ მიცურავი სიტყვები (js/main.js) -->
+      <canvas class="contact__canvas" aria-hidden="true"></canvas>
+
+      <div class="contact__grid">
+        <!-- მარცხენა სვეტი: სათაური და პირდაპირი კონტაქტები -->
+        <div class="contact__info">
+          <p class="tag"><span class="tag__dot"></span>05 — კონტაქტი</p>
+          <h2 class="contact__title" data-reveal>
+            გაქვთ იდეა?<br /><span>ვაქციოთ რეალობად.</span>
+          </h2>
+          <p class="contact__lead" data-reveal style="--d: 1">
+            მოგვწერეთ ისე, როგორც თქვენთვის მოსახერხებელია, ან შეავსეთ მოკლე
+            ფორმა.
+          </p>
+
+          <ul class="direct" data-reveal style="--d: 2">
+            <li>
+              <span class="direct__label">ელფოსტა</span>
+              <button
+                class="copy-btn"
+                type="button"
+                data-copy="webmintgeorgia@gmail.com"
+                data-ripple
+                aria-label="ელფოსტის დაკოპირება: webmintgeorgia@gmail.com"
+              >
+                <span class="copy-btn__text">webmintgeorgia@gmail.com</span>
+                <span class="dot-btn" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="9" y="9" width="11" height="11" rx="2" />
+                    <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li>
+              <span class="direct__label">Messenger</span>
+              <a
+                class="copy-btn messenger-btn"
+                href="https://www.facebook.com/messages/t/1405538015971954"
+                target="_blank"
+                rel="noopener"
+                data-ripple
+              >
+                <span class="copy-btn__text">მოგვწერეთ Messenger-ში</span>
+                <span class="dot-btn" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M12 3C7 3 3 6.7 3 11.3c0 2.5 1.2 4.7 3.1 6.2V21l3-1.7c.9.3 1.9.4 2.9.4 5 0 9-3.7 9-8.4S17 3 12 3z"
+                    />
+                    <path d="m7.5 13.5 3-3 2.5 2 3.5-3" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="socials" data-reveal style="--d: 3">
+            <li>
+              <a
+                href="https://www.instagram.com/direct/t/17948888853073895/"
+                target="_blank"
+                rel="noopener"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com/messages/t/1405538015971954"
+                target="_blank"
+                rel="noopener"
+                >Facebook</a
+              >
+            </li>
+            <!-- <li><a href="https://github.com/gelashvilinodo" target="_blank" rel="noopener">GitHub</a></li> -->
+          </ul>
+        </div>
+
+        <!-- მარჯვენა სვეტი: მოკლე ფორმა -->
+        <form
+          class="brief"
+          data-reveal
+          style="--d: 1"
+          data-to="webmintgeorgia@gmail.com"
+          novalidate
+        >
+          <div class="brief__row">
+            <label class="field">
+              <span class="field__label">სახელი</span>
+              <input
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+                placeholder="თქვენი სახელი"
+              />
+            </label>
+            <label class="field">
+              <span class="field__label">ტელეფონი ან ელფოსტა</span>
+              <input
+                type="text"
+                name="contact"
+                autocomplete="email"
+                required
+                placeholder="+995 … ან mail@…"
+              />
+            </label>
+          </div>
+
+          <fieldset class="field field--tags">
+            <legend class="field__label">რა გჭირდებათ?</legend>
+            <div class="tag-pick">
+              <label
+                ><input type="checkbox" name="need" value="ბრენდინგი" /><span
+                  >ბრენდინგი</span
+                ></label
+              >
+              <label
+                ><input type="checkbox" name="need" value="ვებსაიტი" /><span
+                  >ვებსაიტი</span
+                ></label
+              >
+              <label
+                ><input type="checkbox" name="need" value="აპლიკაცია" /><span
+                  >აპლიკაცია</span
+                ></label
+              >
+              <label
+                ><input type="checkbox" name="need" value="მარკეტინგი" /><span
+                  >მარკეტინგი</span
+                ></label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="need"
+                  value="ჯერ არ ვიცი"
+                  data-exclusive
+                /><span>ჯერ არ ვიცი</span></label
+              >
+            </div>
+          </fieldset>
+
+          <label class="field">
+            <span class="field__label"
+              >მოგვიყევით მოკლედ <em>(არასავალდებულო)</em></span
+            >
+            <textarea
+              name="message"
+              rows="3"
+              placeholder="რა იდეა გაქვთ?"
+            ></textarea>
+          </label>
+
+          <button class="btn btn--mint brief__submit" type="submit" data-ripple>
+            გაგზავნა
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+          <p class="brief__status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="footer-bar">
+        <a href="#top" class="nav__logo" aria-label="WebMint — მთავარი">
+          <img src="images/logo.svg" alt="WebMint" />
+        </a>
+        <p>© <span id="year">2026</span> WebMint</p>
+        <a
+          href="#top"
+          class="dot-btn dot-btn--mint"
+          aria-label="ზემოთ დაბრუნება"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 19V5M6 11l6-6 6 6" />
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <!-- ============ პროექტის ფანჯარა ============ -->
+    <dialog class="modal" aria-labelledby="pm-title">
+      <div class="modal__panel">
+        <button class="modal__close" type="button" aria-label="ფანჯრის დახურვა">
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="modal__scroll">
+          <div class="modal__content"></div>
+        </div>
+        <div class="modal__foot">
+          <button class="modal__next" type="button" data-ripple>
+            <span>შემდეგი პროექტი</span>
+            <strong class="modal__next-name"></strong>
+            <span class="dot-btn" aria-hidden="true"
+              ><svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" /></svg
+            ></span>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
