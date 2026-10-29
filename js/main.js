@@ -458,7 +458,7 @@
     const sendBtn = $('.brief__submit');
     if (contactEl && canvas && canvas.getContext) {
         const ctx = canvas.getContext('2d');
-        const WORDS = ['ლოგო', 'საიტი', 'კამპანია', 'იდეა', 'მაღაზია'];
+        const WORDS = ['ლოგო', 'საიტი', 'დიზაინი', 'იდეა', 'მაღაზია'];
         const LINK_R = 170;     // მაუსიდან რა მანძილზე ჩნდება კავშირები
         const LINK_D = 130;     // ორ წერტილს შორის მაქსიმალური მანძილი ხაზისთვის
         let w = 0, h = 0;

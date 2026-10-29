@@ -35,18 +35,17 @@
         'მენიუს დახურვა': 'Close menu',
 
         /* ---------- ჰედერი ---------- */
-        'ზრდა იწყება ვებსაიტით, აპლიკაციით, სისტემით, დიზაინით და კამპანიით და გრძელდება შედეგით.':
-            'Growth starts with a website, an app, a system, design and a campaign, and continues with results.',
+        'ზრდა იწყება ვებსაიტით, აპლიკაციით, სისტემით და დიზაინით და გრძელდება შედეგით.':
+            'Growth starts with a website, an app, a system and design, and continues with results.',
         'ზრდა იწყება': 'Growth starts with',
         'ვებსაიტით': 'a website',
         'აპლიკაციით': 'an app',
         'სისტემით': 'a system',
         'დიზაინით': 'design',
-        'კამპანიით': 'a campaign',
         'და გრძელდება': 'and continues with',
         'შედეგით': 'results',
-        'ყველაფერი, რაც თქვენს ბრენდს სჭირდება ციფრულ სამყაროში — ერთ ადგილას.':
-            'Everything your brand needs in the digital world — in one place.',
+        'დიზაინი და დეველოპმენტი, რომელიც თქვენს იდეას ციფრულ პროდუქტად აქცევს.':
+            'Design and development that turn your idea into a digital product.',
         'წელი': 'years',
         'გამოცდილება': 'of experience',
         'დასრულებული': 'completed',
@@ -58,23 +57,23 @@
         '01 — სტუდია': '01 — Studio',
         'დიზაინი, რომელიც ჩანს.': 'Design that stands out.',
         'კოდი, რომელიც მუშაობს.': 'Code that works.',
-        'მარკეტინგი, რომელიც ყიდის.': 'Marketing that sells.',
-        'WebMint ციფრული სტუდიაა, რომელიც დიზაინს, დეველოპმენტსა და მარკეტინგს ერთ გუნდში აერთიანებს. ბრენდიდან საიტამდე და საიტიდან კამპანიამდე ყველაფერი ერთ ხელშია და ერთ მიზანს ემსახურება: თქვენი ბიზნესის ზრდას.':
-            'WebMint is a digital studio that brings design, development and marketing together in one team. From brand to website and from website to campaign, everything is in one pair of hands and serves one goal: growing your business.',
+        'გამოცდილება, რომელიც რჩება.': 'Experiences that stick.',
+        'WebMint ციფრული სტუდიაა, რომელიც დიზაინსა და დეველოპმენტს ერთ გუნდში აერთიანებს. იდეიდან დიზაინამდე და დიზაინიდან გაშვებამდე ყველაფერი ერთ ხელშია და ერთ მიზანს ემსახურება: თქვენი ბიზნესის ზრდას.':
+            'WebMint is a digital studio that brings design and development together in one team. From idea to design and from design to launch, everything is in one pair of hands and serves one goal: growing your business.',
         'ნახეთ ნამუშევრები': 'See our work',
         'კოდის მაგალითი': 'Code example',
         '"თქვენი იდეა"': '"your idea"',
         '// → ზრდა': '// → growth',
         'ტერმინალი': 'Terminal',
-        'webmint new "თქვენი პროექტი": ბრენდის იდენტობა შექმნილია, დიზაინი დამტკიცებულია, ვებსაიტი აწყობილია, კამპანია გაშვებულია. ზრდა იწყება.':
-            'webmint new "your project": brand identity created, design approved, website built, campaign launched. Growth begins.',
+        'webmint new "თქვენი პროექტი": ბრენდის იდენტობა შექმნილია, დიზაინი დამტკიცებულია, ვებსაიტი აწყობილია, ტესტირება გავლილია. ზრდა იწყება.':
+            'webmint new "your project": brand identity created, design approved, website built, tests passed. Growth begins.',
         '"თქვენი პროექტი"': '"your project"',
         'ბრენდის იდენტობა': 'Brand identity',
         'შექმნილია': 'created',
         'დამტკიცებულია': 'approved',
         'აწყობილია': 'built',
-        'კამპანია': 'Campaign',
-        'გაშვებულია': 'launched',
+        'ტესტირება': 'Testing',
+        'გავლილია': 'passed',
         'ზრდა იწყება...': 'Growth begins...',
 
         /* ---------- პროექტები ---------- */
@@ -158,7 +157,7 @@
         /* ---------- სერვისები ---------- */
         '03 — სერვისები': '03 — Services',
         'ერთი გუნდი,': 'One team,',
-        'ყველა მიმართულება': 'every discipline',
+        'დიზაინიდან კოდამდე': 'from design to code',
         'შეგიძლიათ აირჩიოთ ერთი სერვისი ან მთლიანი პაკეტი. ორივე შემთხვევაში ერთი გუნდი უზრუნველყოფს, რომ ყველაფერი ერთ სტილში და ერთი მიზნით იყოს შექმნილი.':
             'Choose a single service or the full package. Either way, one team makes sure everything is created in one style and toward one goal.',
         'ბრენდინგი და დიზაინი': 'Branding & design',
@@ -179,9 +178,6 @@
         'მართვის პანელი': 'Dashboard',
         'ანალიტიკა': 'Analytics',
         'ინტეგრაციები': 'Integrations',
-        'ციფრული მარკეტინგი': 'Digital marketing',
-        'თქვენს ბრენდს სწორ აუდიტორიამდე მივიყვანთ: ვმართავთ სოციალურ ქსელებს, ვაწყობთ სარეკლამო კამპანიებს და ვზრუნავთ, რომ საიტი Google-ის ძიებაში მაღლა იყოს.':
-            'We bring your brand to the right audience: we run your social media, set up ad campaigns and make sure your site ranks high on Google.',
         'მხარდაჭერა და განვითარება': 'Support & growth',
         'გაშვებით საქმე არ მთავრდება. ვზრუნავთ, რომ ყველაფერი გამართულად მუშაობდეს, ვაახლებთ კონტენტს და პროექტს ბიზნესთან ერთად ვზრდით.':
             'Launch is not the finish line. We keep everything running smoothly, update your content and grow the project together with your business.',
@@ -204,9 +200,9 @@
         'გაშვება': 'Launch',
         'ვუშვებთ პროექტს, ვამოწმებთ ყველა დეტალს და გაჩვენებთ, როგორ მართოთ ის მარტივად.':
             'We launch the project, check every detail and show you how to manage it with ease.',
-        'ზრდა': 'Growth',
-        'გაშვების შემდეგ ვიწყებთ მარკეტინგს: სოციალურ ქსელებს, სარეკლამო კამპანიებსა და SEO-ს. ვაკვირდებით შედეგებს და პროექტს ბიზნესთან ერთად ვავითარებთ.':
-            'After launch, we start marketing: social media, ad campaigns and SEO. We track the results and keep developing the project together with your business.',
+        'მხარდაჭერა': 'Support',
+        'გაშვების შემდეგაც თქვენთან ვართ: ვზრუნავთ საიტის სტაბილურ მუშაობაზე, ვამატებთ ახალ ფუნქციებს და პროექტს ბიზნესთან ერთად ვავითარებთ.':
+            'We stay with you after launch: we keep the site running smoothly, add new features and keep developing the project together with your business.',
 
         /* ---------- კონტაქტი ---------- */
         '05 — კონტაქტი': '05 — Contact',
@@ -225,7 +221,6 @@
         'ბრენდინგი': 'Branding',
         'ვებსაიტი': 'Website',
         'აპლიკაცია': 'App',
-        'მარკეტინგი': 'Marketing',
         'ჯერ არ ვიცი': 'Not sure yet',
         'მოგვიყევით მოკლედ': 'Tell us briefly',
         '(არასავალდებულო)': '(optional)',
