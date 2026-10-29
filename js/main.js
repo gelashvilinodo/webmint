@@ -288,8 +288,9 @@
                     for (const seg of lineSegments) {
                         seg.after(cursor);
                         const speed = Number(seg.dataset.type) || 40;
-                        for (const ch of tr(seg.dataset.full)) {
-                            seg.textContent += ch;
+                        // ტექსტი ყოველ ასოზე თავიდან ითარგმნება — ბეჭდვისას ენის შეცვლა არ "აურევს"
+                        for (let i = 1; i <= [...tr(seg.dataset.full)].length; i++) {
+                            seg.textContent = [...tr(seg.dataset.full)].slice(0, i).join('');
                             await sleep(speed * (0.6 + Math.random() * 0.8));
                         }
                         await sleep(Number(seg.dataset.pause) || 120);
@@ -499,7 +500,7 @@
             const x = side === 0 ? -50 : side === 1 ? w + 50 : Math.random() * w;
             const y = side === 2 ? h + 30 : side === 3 ? -30 : Math.random() * h;
             words.push({
-                text: tr(WORDS[wordIndex++ % WORDS.length]),
+                text: WORDS[wordIndex++ % WORDS.length],   // ითარგმნება ხატვისას
                 sx: x,
                 sy: y,
                 t: 0,
@@ -576,7 +577,7 @@
                     const size = wd.size * (1 - e * 0.65);
                     ctx.font = `600 ${size.toFixed(1)}px "Space Grotesk", "Noto Sans Georgian", sans-serif`;
                     ctx.fillStyle = `rgba(242, 244, 243, ${alpha.toFixed(3)})`;
-                    ctx.fillText(wd.text, x, y);
+                    ctx.fillText(tr(wd.text), x, y);
                     if (p >= 1) { absorb(); return false; }
                     return true;
                 });
@@ -670,11 +671,11 @@
             }
 
             // სერვერი არ გვაქვს — ფორმა ელფოსტის აპლიკაციაში იხსნება შევსებული წერილით
-            const subject = `ახალი მოთხოვნა საიტიდან — ${name}`;
+            const subject = `${tr('ახალი მოთხოვნა საიტიდან')} — ${name}`;
             const body = [
-                `სახელი: ${name}`,
-                `კონტაქტი: ${contact}`,
-                `რა სჭირდება: ${need.length ? need.join(', ') : '—'}`,
+                `${tr('სახელი')}: ${name}`,
+                `${tr('კონტაქტი')}: ${contact}`,
+                `${tr('რა სჭირდება')}: ${need.length ? need.map(tr).join(', ') : '—'}`,
                 '',
                 message,
             ].join('\n');

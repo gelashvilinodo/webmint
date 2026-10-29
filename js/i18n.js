@@ -222,6 +222,8 @@
         'ვებსაიტი': 'Website',
         'აპლიკაცია': 'App',
         'ჯერ არ ვიცი': 'Not sure yet',
+        'ახალი მოთხოვნა საიტიდან': 'New request from the website',
+        'რა სჭირდება': 'Needs',
         'მოგვიყევით მოკლედ': 'Tell us briefly',
         '(არასავალდებულო)': '(optional)',
         'რა იდეა გაქვთ?': 'What’s your idea?',
@@ -243,6 +245,7 @@
     const ATTRS = ['aria-label', 'placeholder', 'alt', 'title', 'content'];
     const norm = (s) => s.replace(/\s+/g, ' ').trim();
     let lang = 'ka';
+    let target = lang;   // ენა, რომელზეც გადასვლა უკვე დაიწყო (გადასვლა ასინქრონულია)
 
     // თარგმნის და ტოვებს თავდაპირველ ჰარებს (ხაზებს შორის სიცარიელისთვის)
     const swap = (s, dict) => {
@@ -255,6 +258,8 @@
         const dict = lang === 'en' ? EN : KA;
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
         for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+            // კოდის სიტყვები (translate="no") არ ითარგმნება, მაგ. design(idea)
+            if (node.parentElement?.closest('[translate="no"]')) continue;
             const next = swap(node.data, dict);
             if (next !== null && next !== node.data) node.data = next;
         }
@@ -277,7 +282,7 @@
     const label = button?.querySelector('.lang-toggle__text');
 
     const apply = (next) => {
-        lang = next;
+        lang = target = next;
         document.documentElement.lang = next;
         translate(document.documentElement);
         document.title = t(document.title);
@@ -290,7 +295,8 @@
     };
 
     const setLang = (next) => {
-        if (next === lang) return;
+        if (next === target) return;
+        target = next;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!document.startViewTransition || reduce) { apply(next); return; }
         // ახალი ენა რბილად ჩნდება
@@ -306,7 +312,7 @@
         label.classList.remove('is-flipping');
         void label.offsetWidth;
         label.classList.add('is-flipping');
-        setLang(lang === 'en' ? 'ka' : 'en');
+        setLang(target === 'en' ? 'ka' : 'en');
     });
 
     window.i18n = { t, translate, setLang, get lang() { return lang; } };
